@@ -38,7 +38,6 @@ export default function Home() {
         <h4>Select Image</h4>
         <input type="file" name="myImage" onChange={uploadToClient} />       
       </div>
-      <div id="map" className="map"></div>
 
 
       </main>
