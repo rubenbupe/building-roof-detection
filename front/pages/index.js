@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { useState  } from "react";
+import Header from '../src/components/Header';
 
 export default function Home() {
   const [image, setImage] = useState(null);
@@ -23,8 +24,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       
       </Head>
-
+      <Header/>
       <main>
+
         <h1 className="title">
           Compiladores de Dani
         </h1>
@@ -35,7 +37,7 @@ export default function Home() {
 
         <div>
         <img src={createObjectURL} />
-        <h4>Select Image</h4>
+        <h4>Subir Imagen</h4>
         <input type="file" name="myImage" onChange={uploadToClient} />       
       </div>
 

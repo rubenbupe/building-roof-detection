@@ -4,22 +4,31 @@
     <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
 
     <script type="text/javascript">
-      window.onload = function() {
+      
+        window.onload = function() {
         L.mapquest.key = 'lYrP4vF3Uk5zgTiGGuEzQGwGIVDGuy24';
-
+      
         var map = L.mapquest.map('map', {
           center: [37.7749, -122.4194],
           layers: L.mapquest.tileLayer('satellite'),
-          zoom: 18
+          zoom: 18,
+          maxZoom:19,
+          minZoom:15
+          
         });
-
       }
     </script>
+    <style>
+      .leaflet-bottom{
+        display:none !important;
+      }
+      
+    </style>
   </head>
 
   <body style="border: 0; margin: 0;">
-    <div>
-        <div id="map" style="width: 150%; height: 80%; overflow: hidden;"></div>
+    <div style=" overflow: hidden; justify-content: center; display: flex;">
+        <div id="map" style="height: 70vh; aspect-ratio: 1; overflow: hidden;border-radius: 2%; "></div>
     </div>  
   </body>
 </html>
