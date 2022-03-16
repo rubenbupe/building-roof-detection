@@ -1,5 +1,5 @@
 import React from "react";
-import { navLinks } from "../data";
+import { navLinks } from "./data";
 import Link from "next/link";
 
 export default function Header() {

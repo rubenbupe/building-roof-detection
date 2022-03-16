@@ -1,9 +1,9 @@
 export const navLinks = [
     { name: "Foto", 
-     path: "/" 
+     path: "/photo" 
     },
     {
       name: "Mapa",
-      path: "/map.html",
+      path: "/map",
     }
   ];
