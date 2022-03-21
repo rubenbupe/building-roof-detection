@@ -1,32 +1,47 @@
-import Head from 'next/head'
+import Head from 'next/head';
+import Script from 'next/script';
+import React, { useEffect, useState, useRef } from 'react';
+
+import {
+  interaction, layer, custom, control, //name spaces
+  Interactions, Overlays, Controls,     //group
+  Map as MapContainer, Layers, Overlay, Util    //objects
+} from "react-openlayers";
 
 
 export default function Map() {
-    return (
-        <div>
+
+  return (
+    <div>
       <Head>
         <title>Proyecto Reconocimiento</title>
         <link rel="icon" href="/favicon.ico" />
-        <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
-        <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
-        <script type="module" onLoad={'setUp()'} src='/js/map.js' defer></script>
-        <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js"></script>
-        <script
-      src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
-      integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
-      crossorigin=""
-    ></script>
       </Head>
-      <main  style={{border: '0', margin: '0'}}>
+      <main style={{ border: '0', margin: '0' }} >
 
-      <div id='container'>
-        <div id="leafletMapid" class="mapdiv" style={{height: '70vh', aspectRatio: '1', overflow: 'hidden', borderRadius: '2%'}}  ></div>
-       </div> 
-       <button id="snapshot-button">
-         Hacer captura
-    </button>
-      </main> 
+        <div id='container'>
+          {/*  <MapContainer id="leafletMapid" className="mapdiv" style={{ height: '70vh', aspectRatio: '1', overflow: 'hidden', borderRadius: '2%' }}
+            center={[37.7749, -122.4194]} zoom={18} scrollWheelZoom={false}>
+            <TileLayer
+              url='https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'
+              maxZoom={20}
+              subdomains={['mt1', 'mt2', 'mt3']}
+            />
+            <PrintControl ref={printControl} position="topleft" sizeModes={['Current']} hideControlContainer={false} />
 
+          </MapContainer> */}
+          <MapContainer style={{ height: '70vh', aspectRatio: '1', overflow: 'hidden', borderRadius: '2%' }}
+           view={{ center: [0, 0], zoom: 2 }} onClick={() => {}}>
+            <Layers>
+              <layer.Tile
+                  url='https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'
+                  subdomains={['mt1', 'mt2', 'mt3']}
+                  />
+              <layer.Vector zIndex="1" />
+            </Layers>
+          </MapContainer>
+        </div>
+      </main>
     </div>
-    )
-  }
+  )
+}
