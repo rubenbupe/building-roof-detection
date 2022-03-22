@@ -56,19 +56,27 @@ export const watershed = (feature, tensor, output_canvas) => {
     for (let i = 0; i < markers.rows; i++) {
       for (let j = 0; j < markers.cols; j++) {
         if (markers.intPtr(i, j)[0] === -1) {
-          feature_img.ucharPtr(i, j)[0] = 255; // R
-          feature_img.ucharPtr(i, j)[1] = 0; // G
-          feature_img.ucharPtr(i, j)[2] = 0; // B
+          feature_img.ucharPtr(i, j)[0] = 134; // R
+          feature_img.ucharPtr(i, j)[1] = 63; // G
+          feature_img.ucharPtr(i, j)[2] = 228; // B
         }
       }
     }
   
-    cv.resize(feature_img, feature_img, new cv.Size(feature.width, feature.height), 0, 0, cv.INTER_AREA);
+    /*cv.resize(feature_img, feature_img, new cv.Size(feature.width, feature.height), 0, 0, cv.INTER_AREA);
 
     const predCanvas = document.getElementById(output_canvas);
   
     predCanvas.width = feature.width;
-    predCanvas.height = feature.height;
+    predCanvas.height = feature.height;*/
+
+    cv.resize(feature_img, feature_img, new cv.Size(600, 600), 0, 0, cv.INTER_AREA);
+
+    const predCanvas = document.getElementById(output_canvas);
+  
+    predCanvas.width = 600;
+    predCanvas.height = 600;
+
 
     cv.imshow(output_canvas, feature_img);
 

@@ -1,10 +1,74 @@
+
+// variables
+:root {
+  //colors
+  --w-color: white;
+  --bg-color: rgb(134, 63, 228);
+  --bg-color-2: rgb(184, 142, 240);
+  --bg-color-3: rgb(0, 63, 92);
+  --selected-background: rgba(0,0,0,0.1);
+
+  --box-shadow: 0px 0px 34px 8px rgba(0,0,0,0.4);
+  --box-shadow-down: 0px 3px 10px 2px rgba(122,122,122,0.1);
+
+  //spacing
+  --space-unit: 1em;
+  --space-xxs: calc(0.25 * var(--space-unit));
+  --space-xs: calc(0.5 * var(--space-unit));
+  --space-sm: calc(0.75 * var(--space-unit));
+  --space-md: calc(1.25 * var(--space-unit));
+  --space-lg: calc(2 * var(--space-unit));
+  --space-xl: calc(3.25 * var(--space-unit));
+  --space-xxl: calc(5.25 * var(--space-unit));
+  --component-padding: var(--space-md);
+  --border-radius: 15px;
+  color: var(--dark);
+
+  //z-index
+  --footer-3: -10;
+  --footer-2: -9;
+  --footer-1: -8;
+  --header: 20;
+  --map: 10;
+  --map-container: 11;
+
+}
+
+// typography
+@font-face {
+  font-family: 'Maison Neue';
+  font-weight: 700;
+  font-style: normal;
+  font-stretch: normal;
+  src: url('../assets/MaisonNeue-Bold.woff2') format('woff2');
+  font-display: swap;
+}
+
+
+
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  line-height: 1.5;
+  -ms-overflow-style: none;
+  font-family: 'Maison Neue';
+  overflow-x: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
+
+main {
+  padding: 3rem 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 
 a {
   color: inherit;
@@ -15,3 +79,51 @@ a {
   box-sizing: border-box;
 }
 //AQUI SE DECLARARÁN TODAS LAS VARIABLES DE COLORES, FUENTES, Y ESTRUCTURA A USAR
+
+.text-no-select{
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+     -moz-user-select: none; /* Old versions of Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently
+          supported by Chrome, Edge, Opera and Firefox */
+}
+
+
+.custom-button{
+  border: none;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  transition-duration: 0.3s;
+  cursor: pointer;
+  border-radius: 10px;
+  border: 2px solid white;
+  font-weight: 700;
+  mix-blend-mode: screen;
+  color: black;
+  background-color: white;
+  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  
+
+  &:hover{
+    mix-blend-mode: normal;
+    color: white;
+    background-color: transparent;
+  }
+
+  
+}
+
+
+.shadow-container{
+  box-shadow: var(--box-shadow);
+  border-radius: 10px;
+  height: fit-content;
+  width: fit-content;
+}

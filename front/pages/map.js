@@ -1,5 +1,6 @@
 import Header from "../src/components/Header/Header"
 import dynamic from 'next/dynamic'
+import Footer from '../src/components/Footer/Footer';
 
 function MapScreen() {
   const Map = dynamic(
@@ -10,6 +11,7 @@ function MapScreen() {
     <div>
       <Header/>
       <Map/>
+      <Footer/>
     </div>
   )
 }

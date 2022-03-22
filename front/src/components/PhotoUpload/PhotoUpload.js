@@ -4,6 +4,7 @@ import Header from '../Header/Header';
 import * as ImageHelper from '../../helpers/images';
 import * as tf from '@tensorflow/tfjs';
 import * as Predictor from '../../helpers/predictions';
+import { CloudUploadOutline, } from 'react-ionicons'
 
 tf.setBackend('webgl');
 
@@ -34,6 +35,10 @@ export default function PhotoUpload() {
     }
   };
 
+  const onUploadClick = () => {
+    document.getElementById('file-input').click();
+  }
+
   useEffect(() => {
     load_model().then(model => {
       setModel(model);
@@ -51,10 +56,18 @@ export default function PhotoUpload() {
       </Head>
       <main>
 
-      <h4>Subir Imagen</h4>
-      <input type="file" name="myImage" onChange={uploadToClient} />
-      <br/>
-      <canvas id='prediction'/>
+        <div className='main-container-photo'>
+          <div className='shadow-container'>
+            <div className='photo-upload-container'>
+              <CloudUploadOutline height={'175px'} width={'175px'} className='photo-upload-icon' onClick={onUploadClick} />
+              <span className='photo-upload-text text-no-select'>Sube una imagen para procesar</span>
+              <input id="file-input" type="file" name="name" style={{ display: 'none' }} onChange={uploadToClient} />
+            </div>
+          </div>
+          <div className='prediction-container'>
+            <canvas id='prediction' className='prediction' />
+          </div>
+        </div>
 
       </main>
     </div>

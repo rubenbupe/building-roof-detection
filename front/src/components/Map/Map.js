@@ -5,6 +5,7 @@ import * as L from "leaflet";
 import { SimpleMapScreenshoter } from "leaflet-simple-map-screenshoter";
 import * as tf from '@tensorflow/tfjs';
 import * as Predictor from '../../helpers/predictions';
+import { ArrowForwardCircle } from 'react-ionicons'
 
 tf.setBackend('webgl');
 
@@ -20,18 +21,18 @@ export default function Map() {
 
   const onButtonClick = () => {
     screenshotter.takeScreen('image', {})
-    .then(image => {
-      if(model == null){return;}
-  
-      let i = new Image(); 
+      .then(image => {
+        if (model == null) { return; }
 
-      i.onload = async function(){
-        Predictor.predictImage(model, i, 'prediction');
-      };
-      i.src = image;
-    }).catch(e => {
-      console.error(e.toString())
-    })
+        let i = new Image();
+
+        i.onload = async function () {
+          Predictor.predictImage(model, i, 'prediction');
+        };
+        i.src = image;
+      }).catch(e => {
+        console.error(e.toString())
+      })
   };
 
 
@@ -74,11 +75,16 @@ export default function Map() {
         <script src="https://docs.opencv.org/master/opencv.js" type="text/javascript" defer></script>
         <title>Proyecto Reconocimiento</title>
       </Head>
-      <main style={{ border: "0", margin: "0" }}>
-        <button id="button" onClick={onButtonClick}>  Show screenshot</button>
-        <div id="map" style={{ width: "600px", height: "600px" }}></div>
-        <img id='test-img'></img>
-        <canvas id='prediction' style={{ width: "600px", height: "600px" }}/>
+      <main>
+        <div className="main-container-map">
+          <div className="map-container">
+            <div className="map" id="map" style={{ width: "600px", height: "600px" }} />
+          </div>
+          <span className="map-screenshot-button custom-button" id="button" onClick={onButtonClick}>Procesar imagen →</span>
+          <div className="map-container">
+            <canvas id='prediction' className="map" style={{ width: "600px", height: "600px" }} />
+          </div>
+        </div>
       </main>
     </div>
   );

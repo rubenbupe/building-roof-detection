@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Header from '../src/components/Header/Header';
+import Footer from '../src/components/Footer/Footer';
 import PhotoUpload from '../src/components/PhotoUpload/PhotoUpload';
 export default function Home() {
   
@@ -12,17 +13,6 @@ export default function Home() {
       
       </Head>
       <Header/>
-      <main>
-
-        <h1 className="title">
-          Compiladores de Dani
-        </h1>
-
-        <p className="description">
-          Proyectos IV Reconocimiento de Edificios
-        </p>
-
-      </main>
     </div>
   )
 }
