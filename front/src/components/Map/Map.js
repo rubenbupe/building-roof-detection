@@ -14,8 +14,7 @@ async function load_model() {
     return model;
 }
 
-
-export default function Map() {
+export default function Map({serverSwitch, segmentationSwitch}) {
     const [screenshotter, setScreenshotter] = useState(new SimpleMapScreenshoter({hidden: true}));
     const [model, setModel] = useState(null);
 
@@ -29,7 +28,7 @@ export default function Map() {
                 let i = new Image();
 
                 i.onload = async function () {
-                    Predictor.predictImage(model, i, 'prediction');
+                    Predictor.predictImage(model, i, 'prediction', segmentationSwitch);
                 };
                 i.src = image;
             }).catch(e => {
@@ -37,14 +36,11 @@ export default function Map() {
         })
     };
 
-
     useEffect(() => {
         const map = L.map("map").setView([36.123361, -115.198623], 13);
 
         L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            maxZoom: 20,
-            minZoom: 17,
-            subdomains: []
+            maxZoom: 20, minZoom: 17, subdomains: []
         }).addTo(map);
 
         /*
@@ -74,7 +70,6 @@ export default function Map() {
                     integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
                     crossOrigin=""
                 />
-                <script src="https://docs.opencv.org/master/opencv.js" type="text/javascript" defer/>
                 <title>Proyecto Reconocimiento</title>
             </Head>
             <main>
@@ -88,6 +83,5 @@ export default function Map() {
                     </div>
                 </div>
             </main>
-        </div>
-    );
+        </div>);
 }

@@ -4,7 +4,6 @@
   align-items: center;
   justify-items: center;
 
-
   .photo-upload-container {
     min-width: 10%;
     background-color: var(--w-color);
@@ -40,17 +39,18 @@
     }
   }
 
-  .prediction-container{
-		border-radius: 18px;
-		border: 8px solid var(--w-color);
-		box-shadow: var(--box-shadow);
-		background-color: var(--w-color);
-		height: fit-content;
-		align-items: center;
-		justify-items: center;
+  .prediction-container {
+    border-radius: 18px;
+    border: 8px solid var(--w-color);
     box-shadow: var(--box-shadow);
-	}
-  .prediction{
+    background-color: var(--w-color);
+    height: fit-content;
+    align-items: center;
+    justify-items: center;
+    box-shadow: var(--box-shadow);
+  }
+
+  .prediction {
     width: 600px;
     height: 600px;
     background-color: var(--w-color);

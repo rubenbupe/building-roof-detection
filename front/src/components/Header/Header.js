@@ -4,22 +4,16 @@ import Link from "next/link";
 import {MapOutline, CloudUploadOutline, VideocamOutline, LogoGithub, GitBranch} from 'react-ionicons'
 
 const serverTexts = {
-    true: 'Servidor',
-    false: 'Cliente',
-    def: 'Error'
+    true: 'Servidor', false: 'Cliente', def: 'Error'
 }
 
 const segmentationTexts = {
-    true: 'Instancia',
-    false: 'Semántica',
-    def: 'Error'
+    true: 'Instancia', false: 'Semántica', def: 'Error'
 }
 
 export default function Header({serverSwitch, setServerSwitch, segmentationSwitch, setSegmentationSwitch}) {
     const icons = {
-        '/map': MapOutline,
-        '/photo': CloudUploadOutline,
-        '/video': VideocamOutline,
+        '/map': MapOutline, '/photo': CloudUploadOutline, '/video': VideocamOutline,
     }
 
     return (
@@ -31,12 +25,10 @@ export default function Header({serverSwitch, setServerSwitch, segmentationSwitc
                 <nav className="header-nav">
                     {navLinks.map((link, index) => {
                         const CurIcon = icons[link.path];
-                        return (
-                            <Link key={index} href={link.path}>
+                        return (<Link key={index} href={link.path}>
                             <span className="header-nav-item text-no-select" key={index}><CurIcon
                                 className="header-nav-icon"/>{link.name}</span>
-                            </Link>
-                        );
+                        </Link>);
                     })}
 
                 </nav>
@@ -64,7 +56,5 @@ export default function Header({serverSwitch, setServerSwitch, segmentationSwitc
             <Link href={'https://www.github.com'}>
                 <span className="header-nav-item text-no-select"><LogoGithub className="header-nav-icon"/>GitHub</span>
             </Link>
-        </header>
-    )
-        ;
+        </header>);
 }
