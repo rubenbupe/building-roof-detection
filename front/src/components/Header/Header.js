@@ -1,10 +1,21 @@
-import React from "react";
+import React, {useState} from "react";
 import {navLinks} from "./data";
 import Link from "next/link";
 import {MapOutline, CloudUploadOutline, VideocamOutline, LogoGithub, GitBranch} from 'react-ionicons'
 
+const serverTexts = {
+    true: 'Servidor',
+    false: 'Cliente',
+    def: 'Error'
+}
 
-export default function Header() {
+const segmentationTexts = {
+    true: 'Instancia',
+    false: 'Semántica',
+    def: 'Error'
+}
+
+export default function Header({serverSwitch, setServerSwitch, segmentationSwitch, setSegmentationSwitch}) {
     const icons = {
         '/map': MapOutline,
         '/photo': CloudUploadOutline,
@@ -32,17 +43,21 @@ export default function Header() {
                 <div className="header-toggle-container">
                     <div className="header-toggle">
                         <label className="switch">
-                            <input type="checkbox"/>
+                            <input onChange={(e) => {
+                                setServerSwitch(e.target.checked);
+                            }} checked={serverSwitch} type="checkbox"/>
                             <span className="slider round"/>
                         </label>
-                        <p id="switch-server">Servidor</p>
+                        <p id="switch-server">{serverTexts[serverSwitch] ?? serverTexts.def}</p>
                     </div>
                     <div className="header-toggle">
                         <label className="switch">
-                            <input type="checkbox"/>
+                            <input onChange={(e) => {
+                                setSegmentationSwitch(e.target.checked);
+                            }} checked={segmentationSwitch} type="checkbox"/>
                             <span className="slider round"/>
                         </label>
-                        <p id="switch-segmentation">Instancia</p>
+                        <p id="switch-segmentation">{segmentationTexts[segmentationSwitch] ?? segmentationTexts.def}</p>
                     </div>
                 </div>
             </div>
