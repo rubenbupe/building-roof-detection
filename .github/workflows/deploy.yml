@@ -72,7 +72,7 @@ jobs:
         run: |
           gcloud container clusters get-credentials cluster-${{ steps.extract_branch.outputs.branch }} --zone $GKE_ZONE --project $GKE_PROJECT
 
-          ./kustomize edit set image ENV_IMAGE=$REGISTRY_HOSTNAME/$GKE_PROJECT/app_${{ steps.extract_branch.outputs.branch }}:$GITHUB_SHA
+          (cd ./deploy && ../kustomize edit set image ENV_IMAGE=$REGISTRY_HOSTNAME/$GKE_PROJECT/app_${{ steps.extract_branch.outputs.branch }}:$GITHUB_SHA)
           ./kustomize build ./deploy | kubectl apply -f -
           kubectl get deploy --output name | \
             timeout 3m \
