@@ -71,9 +71,8 @@ jobs:
       - name: Deploy
         run: |
           gcloud container clusters get-credentials cluster-${{ steps.extract_branch.outputs.branch }} --zone $GKE_ZONE --project $GKE_PROJECT
-          find ./deploy/app/ -iname '*.yaml' -exec sed -i -e 's/REGISTRY_HOSTNAME/'"$REGISTRY_HOSTNAME"'/' {} +
-          find ./deploy/app/ -iname '*.yaml' -exec sed -i -e 's@ENV_IMAGE@'"$REGISTRY_HOSTNAME"/"$GKE_PROJECT"/"app_${{ steps.extract_branch.outputs.branch }}":"$GITHUB_SHA"'@g' {} +
 
+          ./kustomize edit set image ENV_IMAGE=$REGISTRY_HOSTNAME/$GKE_PROJECT/app_${{ steps.extract_branch.outputs.branch }}:$GITHUB_SHA
           ./kustomize build ./deploy | kubectl apply -f -
           kubectl get deploy --output name | \
             timeout 3m \
