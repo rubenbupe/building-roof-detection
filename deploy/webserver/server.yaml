@@ -31,8 +31,8 @@ spec:
             requests:
               cpu: 250m
               memory: 256Mi
-          nodeSelector:
-            cloud.google.com/gke-nodepool: default-pool
+      nodeSelector:
+        cloud.google.com/gke-nodepool: default-pool
 
 ---
 apiVersion: v1
