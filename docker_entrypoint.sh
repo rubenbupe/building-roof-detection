@@ -2,7 +2,7 @@
 
 case "$APP" in
   WEBSERVER)
-    npm run frontStart
+    npm run startFront
     ;;
 
 esac
