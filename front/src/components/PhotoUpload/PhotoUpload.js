@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import dynamic from 'next/dynamic'
 import React, { useEffect, useState, useRef } from "react";
 import Header from '../Header/Header';
 import * as ImageHelper from '../../helpers/images';
@@ -6,10 +7,8 @@ import * as tf from '@tensorflow/tfjs';
 import * as Predictor from '../../helpers/predictions';
 import { CloudUploadOutline, } from 'react-ionicons'
 
-tf.setBackend('webgl');
-
 async function load_model() {
-  const model = await tf.loadLayersModel("http://127.0.0.1:8080/model.json");
+  const model = await tf.loadLayersModel("models/model.json");
   return model;
 }
 
@@ -40,6 +39,7 @@ export default function PhotoUpload() {
   }
 
   useEffect(() => {
+    tf.setBackend('webgl');
     load_model().then(model => {
       setModel(model);
     });

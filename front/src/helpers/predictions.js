@@ -56,9 +56,9 @@ export const watershed = (feature, tensor, output_canvas) => {
     for (let i = 0; i < markers.rows; i++) {
       for (let j = 0; j < markers.cols; j++) {
         if (markers.intPtr(i, j)[0] === -1) {
-          feature_img.ucharPtr(i, j)[0] = 134; // R
-          feature_img.ucharPtr(i, j)[1] = 63; // G
-          feature_img.ucharPtr(i, j)[2] = 228; // B
+          feature_img.ucharPtr(i, j)[0] = 255 //134; // R
+          feature_img.ucharPtr(i, j)[1] = 0 //63; // G
+          feature_img.ucharPtr(i, j)[2] = 0 //228; // B
         }
       }
     }

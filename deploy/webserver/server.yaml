@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver
+  labels:
+    app: webserver
+spec:
+  selector:
+    matchLabels:
+      app: webserver
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: webserver
+    spec:
+      containers:
+        - name: webserver
+          image: ENV_IMAGE
+          ports:
+            - containerPort: 3000
+          env:
+            - name: APP
+              value: WEBSERVER
+
+            - name: DATABASE_URI
+              value: ENV_DATABASE_URI
+            - name: TURN_DATABASE_URI
+              value: ENV_TURN_DATABASE_URI
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+      nodeSelector:
+        cloud.google.com/gke-nodepool: default-pool
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webserver
+  namespace: default
+  labels:
+    app: webserver
+spec:
+  selector:
+    app: webserver
+  ports:
+    - protocol: TCP
+      port: 30000
+      targetPort: 3000
+  type: NodePort
+
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: webserver
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: webserver
+  minReplicas: 1
+  maxReplicas: 2
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 75
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: AverageValue
+          averageValue: 175Mi

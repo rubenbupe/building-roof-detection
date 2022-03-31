@@ -1,0 +1,48 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: reconocimiento-del-medio-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/limit-rpm: "300"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/send-timeout: "3600"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "64m"
+    nginx.org/websocket-services : "api"
+    nginx.ingress.kubernetes.io/websocket-services : "api"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
+
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - reconocimiento.eu
+        - www.reconocimiento.eu
+        - api.reconocimiento.eu
+      secretName: reconocimiento-tls
+  rules:
+    - host: www.reconocimiento.eu
+      http:
+        paths:
+          - pathType: ImplementationSpecific
+            path: "/"
+            backend:
+              service:
+                name: webserver
+                port:
+                  number: 30000
+    - host: api.reconocimiento.eu
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: api
+                port:
+                  number: 30001
