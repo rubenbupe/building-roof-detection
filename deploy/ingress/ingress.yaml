@@ -21,12 +21,12 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - reconocimiento.eu
-        - www.reconocimiento.eu
-        - api.reconocimiento.eu
+        - reconocimientodelmedio.es
+        - www.reconocimientodelmedio.es
+        - api.reconocimientodelmedio.es
       secretName: reconocimiento-tls
   rules:
-    - host: www.reconocimiento.eu
+    - host: www.reconocimientodelmedio.es
       http:
         paths:
           - pathType: ImplementationSpecific
@@ -36,7 +36,7 @@ spec:
                 name: webserver
                 port:
                   number: 30000
-    - host: api.reconocimiento.eu
+    - host: api.reconocimientodelmedio.es
       http:
         paths:
           - pathType: Prefix
