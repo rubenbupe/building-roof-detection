@@ -27,12 +27,12 @@ spec:
               value: ENV_DATABASE_URI
             - name: TURN_DATABASE_URI
               value: ENV_TURN_DATABASE_URI
-        resources:
-          requests:
-            cpu: 250m
-            memory: 256Mi
-        nodeSelector:
-          cloud.google.com/gke-nodepool: default-pool
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+          nodeSelector:
+            cloud.google.com/gke-nodepool: default-pool
 
 ---
 apiVersion: v1
