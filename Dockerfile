@@ -31,13 +31,10 @@ WORKDIR /app
 ### PYTHON SETUP ###
 
 RUN apt update
-RUN apt install -y software-properties-common
+RUN apt install -y software-properties-common netcat
 RUN apt install -y python3-pip python3-opencv
 
 # Install Python dependencies
 RUN cd api && python3 -m pip install -r requirements.txt
-
-# Expose port
-EXPOSE 5000
 
 ENTRYPOINT ["sh", "docker_entrypoint.sh"]

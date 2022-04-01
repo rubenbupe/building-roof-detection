@@ -6,7 +6,7 @@ case "$APP" in
     ;;
 
   API)
-    cd api && python3 app.py
+    cd api && FLASK_ENV=production gunicorn -b 0.0.0.0:3000 app:app
     ;;
 
 esac
