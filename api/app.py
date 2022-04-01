@@ -3,6 +3,7 @@ from flask_socketio import SocketIO, emit  # !pip install flask-socketio
 import cv2
 import numpy as np
 import base64
+import os
 
 from helpers import image as image_helper
 from helpers import watershed as watershed_helper
@@ -72,4 +73,7 @@ def image(params):
 
 
 if __name__ == '__main__':
-    socketio.run(app, debug=False) 
+    if os.environ.get('FLASK_ENV') == 'production':
+        socketio.run(app, debug=False, host='0.0.0.0') 
+    else:
+        socketio.run(app) 
