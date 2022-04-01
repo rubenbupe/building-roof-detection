@@ -5,4 +5,8 @@ case "$APP" in
     npm run startFront
     ;;
 
+  API)
+    cd api && python3 app.py
+    ;;
+
 esac
