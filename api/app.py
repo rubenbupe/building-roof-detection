@@ -71,7 +71,6 @@ def image(params):
 
     emit('image_response', stringData)
 
-
 if __name__ == '__main__':
     if os.environ.get('FLASK_ENV') == 'production':
         socketio.run(app, debug=False, host='0.0.0.0') 
