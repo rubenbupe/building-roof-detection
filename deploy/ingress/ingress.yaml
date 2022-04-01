@@ -33,7 +33,7 @@ spec:
             path: "/"
             backend:
               service:
-                name: webserver
+                name: front
                 port:
                   number: 30000
     - host: api.reconocimientodelmedio.es

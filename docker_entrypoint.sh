@@ -1,7 +1,7 @@
 #!/bin/bash
 
 case "$APP" in
-  WEBSERVER)
+  FRONT)
     npm run startFront
     ;;
 

@@ -16,18 +16,17 @@ export default function Header() {
       <div className="header-logo-container text-no-select">
         <span className="header-logo">Reconocimiento</span>
       </div>
-      <nav className="header-nav">
-        {navLinks.map((link, index) => {
-          const CurIcon = icons[link.path];
-          return (
-            <Link key={index} href={link.path}>
-              <span className="header-nav-item text-no-select" key={index}><CurIcon className="header-nav-icon" />{link.name}</span>
-            </Link>
-          );
-        })}
-      </nav>
+      {navLinks.map((link, index) => {
+        const CurIcon = icons[link.path];
+        return (
+          <Link key={index} href={link.path}>
+            <span className="header-nav-item text-no-select" key={index}><CurIcon className="header-nav-icon" />{link.name}</span>
+          </Link>
+        );
+      })}
+
       <Link href={'https://www.github.com'}>
-        <span className="header-nav-item text-no-select"><LogoGithub className="header-nav-icon" />GitHub</span>
+        <span className="header-nav-item header-nav-right text-no-select"><LogoGithub className="header-nav-icon" />GitHub</span>
       </Link>
     </header>
   );

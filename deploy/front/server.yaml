@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: webserver
+  name: front
   labels:
-    app: webserver
+    app: front
 spec:
   selector:
     matchLabels:
-      app: webserver
+      app: front
   replicas: 1
   template:
     metadata:
       labels:
-        app: webserver
+        app: front
     spec:
       containers:
-        - name: webserver
+        - name: front
           image: ENV_IMAGE
           ports:
             - containerPort: 3000
           env:
             - name: APP
-              value: WEBSERVER
+              value: FRONT
 
             - name: DATABASE_URI
               value: ENV_DATABASE_URI
@@ -38,13 +38,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: webserver
+  name: front
   namespace: default
   labels:
-    app: webserver
+    app: front
 spec:
   selector:
-    app: webserver
+    app: front
   ports:
     - protocol: TCP
       port: 30000
@@ -55,12 +55,12 @@ spec:
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: webserver
+  name: front
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: webserver
+    name: front
   minReplicas: 1
   maxReplicas: 2
   metrics:
