@@ -92,25 +92,30 @@ export const watershed = (feature, tensor, output_canvas, watershed_toggle) => {
             M.delete();
 
         } else {
-            let semantic_gray = new cv.Mat();
+            const opacity_canvas = document.getElementById('map-mask-image');
+            let feature_img = new cv.imread(feature);
             let semantic_src = new cv.imread(canvas);
+            let semantic_gray = new cv.Mat();
+
             cv.cvtColor(semantic_src, semantic_gray, cv.COLOR_RGBA2GRAY, 0);
             cv.imshow(output_canvas, semantic_gray);
-            semantic_gray.delete();
+            cv.imshow(opacity_canvas, feature_img);
+
+            feature_img.delete();
             semantic_src.delete();
+            semantic_gray.delete();
         }
+    }).catch((e) => {
+        console.log(e)
     });
 }
 
 export const renderPredictions = (feature, predictions, output_canvas, watershed_toggle) => {
-    //predictions.max().print()
-    //predictions.min().print()
     const tensor = tf.expandDims(predictions.dataSync().map((x) => {
-        //console.log(x)
         if (x >= 0.5) {
-            return 1;
-        } else {
             return 0;
+        } else {
+            return 1;
         }
     }), 1).reshape([512, 512]);
     watershed(feature, tensor, output_canvas, watershed_toggle);

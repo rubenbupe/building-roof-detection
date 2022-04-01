@@ -7,10 +7,43 @@
     border-radius: 18px;
     border: 8px solid var(--w-color);
     box-shadow: var(--box-shadow);
-    background-color: var(--w-color);
+    background-color: var(--b-color);
     height: fit-content;
     align-items: center;
     justify-items: center;
+    position: relative;
+
+    #prediction {
+      opacity: 1;
+      mix-blend-mode: screen;
+      position: relative;
+      z-index: var(--map-mask);
+    }
+
+    #map-mask-image {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      width: 600px;
+      height: 600px;
+    }
+
+    .map-slider-container {
+      background-color: var(--bg-color-2);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 0 0 10px 10px;
+
+      .custom-slider {
+        width: 80%;
+      }
+    }
+
+
   }
 
   .map {
@@ -48,4 +81,6 @@
     justify-self: center;
     max-width: 50%;
   }
+
 }
+

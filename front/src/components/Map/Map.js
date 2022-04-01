@@ -17,6 +17,7 @@ async function load_model() {
 export default function Map({serverSwitch, segmentationSwitch}) {
     const [screenshotter, setScreenshotter] = useState(new SimpleMapScreenshoter({hidden: true}));
     const [model, setModel] = useState(null);
+    const maskImageOpacityRef = useRef();
 
     const onButtonClick = () => {
         screenshotter.takeScreen('image', {})
@@ -79,7 +80,24 @@ export default function Map({serverSwitch, segmentationSwitch}) {
                     </div>
                     <span className="map-screenshot-button custom-button" id="button" onClick={onButtonClick}>Procesar imagen →</span>
                     <div className="map-container">
-                        <canvas id='prediction' className="map" style={{width: "600px", height: "600px"}}/>
+                        <canvas ref={maskImageOpacityRef} id='prediction' className="map"
+                                style={{width: "600px", height: "600px"}}/>
+
+                        {segmentationSwitch === false &&
+                            (
+                                <>
+                                    <canvas id='map-mask-image' className="map" />
+
+                                    <div className="map-slider-container">
+                                        <input type="range" min="0" max="1" className="custom-slider" step="0.1"
+                                               onInput={(e) => {
+                                                   maskImageOpacityRef && (maskImageOpacityRef.current.style.opacity = e.target.value);
+                                               }}/>
+                                    </div>
+                                </>
+                            )
+                        }
+
                     </div>
                 </div>
             </main>
