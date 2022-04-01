@@ -85,11 +85,11 @@ export default function Map() {
       <main>
         <div className="main-container-map">
           <div className="map-container">
-            <div className="map" id="map" style={{ width: "600px", height: "600px" }} />
+            <div className="map" id="map"/>
           </div>
           <span className="map-screenshot-button custom-button" id="button" onClick={onButtonClick}>Procesar imagen →</span>
           <div className="map-container">
-            <canvas id='prediction' className="map" style={{ width: "600px", height: "600px" }} />
+            <canvas id='prediction' className="map" />
           </div>
         </div>
       </main>

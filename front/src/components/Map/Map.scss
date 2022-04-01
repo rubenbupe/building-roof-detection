@@ -8,13 +8,12 @@
 	display: grid;
 	grid-template-columns: 5fr 2fr 5fr;
 	column-gap: 20px;
+	row-gap: 40px;
 }
 
 @include max-width(1400px) {
 	.main-container-map{
-		display: grid;
 		grid-template-columns: 1fr;
-		row-gap: 40px;
 	}
 }
 
@@ -26,14 +25,25 @@
 	box-shadow: var(--box-shadow);
 	background-color: var(--w-color);
 	height: fit-content;
+	width: max-content;
 	align-items: center;
 	justify-items: center;
 }
 
 .map {
+	width: 600px;
+	height: 600px;
 	border-radius: 10px;
 	overflow: hidden;
 	z-index: var(--map-container);
+	display: block;
+}
+
+@include max-width(1400px) {
+	.map{
+	  width: 300px;
+	  height: 300px;
+	}
 }
 
 .leaflet-pane, .leaflet-bottom, .leaflet-tile-container{
@@ -66,3 +76,5 @@
 	justify-self: center;
 	max-width: 50%;
 }
+
+

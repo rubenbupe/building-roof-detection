@@ -10,15 +10,12 @@
   align-items: center;
   justify-items: center;
   column-gap: 20px;
+  row-gap: 40px;
 }
 
 @include max-width(1400px) {
   .main-container-photo {
-    display: grid;
     grid-template-columns: 1fr;
-    align-items: center;
-    justify-items: center;
-    row-gap: 40px;
   }
 }
 
@@ -72,9 +69,18 @@
   justify-items: center;
   box-shadow: var(--box-shadow);
 }
+
+
 .prediction{
   width: 600px;
   height: 600px;
   background-color: var(--w-color);
   border-radius: 10px;
+  display: block;
+}
+@include max-width(1400px) {
+  .prediction{
+    width: 300px;
+    height: 300px;
+  }
 }
