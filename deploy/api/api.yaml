@@ -29,10 +29,10 @@ spec:
               value: ENV_TURN_DATABASE_URI
           resources:
             requests:
-              cpu: 250m
+              cpu: 150m
               memory: 512Mi
             limits:
-              cpu: 300m
+              cpu: 200m
               memory: 512Mi
       nodeSelector:
         cloud.google.com/gke-nodepool: default-pool
