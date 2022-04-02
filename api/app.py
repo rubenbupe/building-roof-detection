@@ -9,7 +9,7 @@ from helpers import image as image_helper
 from helpers import watershed as watershed_helper
 from helpers import predictions as prediction_helper
 app = Flask(__name__)
-socketio = SocketIO(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 
 @app.route('/predictions/instance', methods=['GET'])
@@ -75,4 +75,4 @@ if __name__ == '__main__':
     if os.environ.get('FLASK_ENV') == 'production':
         socketio.run(app, debug=False, host='0.0.0.0') 
     else:
-        socketio.run(app) 
+        socketio.run(app, port=3000) 

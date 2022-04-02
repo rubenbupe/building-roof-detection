@@ -33,7 +33,7 @@ spec:
               memory: 512Mi
             limits:
               cpu: 200m
-              memory: 512Mi
+              memory: 1800Mi
       nodeSelector:
         cloud.google.com/gke-nodepool: default-pool
 
@@ -78,4 +78,4 @@ spec:
         name: memory
         target:
           type: AverageValue
-          averageValue: 450Mi
+          averageValue: 1500Mi
