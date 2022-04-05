@@ -20,7 +20,7 @@
       z-index: var(--map-mask);
     }
 
-    #map-mask-image {
+    #mask-image {
       position: absolute;
       left: 0;
       top: 0;
@@ -36,7 +36,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      border-radius: 0 0 10px 10px;
+      border-radius: 0 0 8px 8px;
 
       .custom-slider {
         width: 80%;

@@ -1,11 +1,9 @@
 import Head from "next/head";
-import Script from "next/script";
 import React, {useEffect, useState, useRef} from "react";
 import * as L from "leaflet";
 import {SimpleMapScreenshoter} from "leaflet-simple-map-screenshoter";
 import * as tf from '@tensorflow/tfjs';
-import * as Predictor from '../../helpers/predictions';
-import {ArrowForwardCircle} from 'react-ionicons'
+import * as toggleStrategy from '../../helpers/toggleStrategy.js';
 
 tf.setBackend('webgl');
 
@@ -29,8 +27,9 @@ export default function Map({serverSwitch, segmentationSwitch}) {
                 let i = new Image();
 
                 i.onload = async function () {
-                    Predictor.predictImage(model, i, 'prediction', segmentationSwitch);
+                    await toggleStrategy.toggleStrategy(model, i, 'prediction', segmentationSwitch, serverSwitch);
                 };
+
                 i.src = image;
             }).catch(e => {
             console.error(e.toString())
@@ -86,7 +85,7 @@ export default function Map({serverSwitch, segmentationSwitch}) {
                         {segmentationSwitch === false &&
                             (
                                 <>
-                                    <canvas id='map-mask-image' className="map" />
+                                    <canvas id='mask-image' className="map"/>
 
                                     <div className="map-slider-container">
                                         <input type="range" min="0" max="1" className="custom-slider" step="0.1"
