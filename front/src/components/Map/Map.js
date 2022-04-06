@@ -92,7 +92,6 @@ export default function Map({serverSwitch, segmentationSwitch}) {
                                        }}/>
                             </div>
                         </>)}
-
                     </div>
                 </div>
             </main>

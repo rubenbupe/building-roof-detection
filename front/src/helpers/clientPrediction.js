@@ -1,7 +1,6 @@
 import * as tf from '@tensorflow/tfjs';
 
 export const watershed = (feature, tensor, output_canvas, watershed_toggle) => {
-    // TODO: comprobar que ha cargado opencvjs
     const canvas = document.createElement('canvas');
     tf.browser.toPixels(tensor, canvas).then(() => {
         canvas.getContext("2d");

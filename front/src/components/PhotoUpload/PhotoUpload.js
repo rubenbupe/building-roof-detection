@@ -49,7 +49,6 @@ export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
                 <link rel='icon' href='/favicon.ico'/>
             </Head>
             <main>
-
                 <div className='main-container-photo'>
                     <div className='shadow-container'>
                         <div className='photo-upload-container'>
@@ -74,7 +73,6 @@ export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
                         </>)}
                     </div>
                 </div>
-
             </main>
         </div>)
 }
