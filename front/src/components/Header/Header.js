@@ -1,14 +1,14 @@
 import React from "react";
 import { navLinks } from "./data";
 import Link from "next/link";
-import { MapOutline, CloudUploadOutline, VideocamOutline, LogoGithub, GitBranch } from 'react-ionicons'
+import { MapOutline, CloudUploadOutline, LogoGithub, CodeSlashOutline } from 'react-ionicons'
 
 
 export default function Header() {
   const icons = {
     '/map': MapOutline,
     '/photo': CloudUploadOutline,
-    '/video': VideocamOutline,
+    '/api-reference': CodeSlashOutline,
   }
 
   return (
@@ -20,13 +20,13 @@ export default function Header() {
         const CurIcon = icons[link.path];
         return (
           <Link key={index} href={link.path}>
-            <span className="header-nav-item text-no-select" key={index}><CurIcon className="header-nav-icon" />{link.name}</span>
+            <a className="header-nav-item text-no-select" key={index}><CurIcon className="header-nav-icon" />{link.name}</a>
           </Link>
         );
       })}
 
-      <Link href={'https://www.github.com'}>
-        <span className="header-nav-item header-nav-right text-no-select"><LogoGithub className="header-nav-icon" />GitHub</span>
+      <Link href={'https://github.com/rubenbupe/proyectos-data'}>
+        <a target="_blank" className="header-nav-item header-nav-right text-no-select"><LogoGithub className="header-nav-icon" />GitHub</a>
       </Link>
     </header>
   );

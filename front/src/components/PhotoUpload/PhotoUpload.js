@@ -60,7 +60,7 @@ export default function PhotoUpload() {
           <div className='shadow-container'>
             <div className='photo-upload-container'>
               <CloudUploadOutline height={'175px'} width={'175px'} className='photo-upload-icon' onClick={onUploadClick} />
-              <span className='photo-upload-text text-no-select'>Sube una imagen para procesar</span>
+              <span className='photo-upload-text text-no-select'>Upload an image to process</span>
               <input id="file-input" type="file" name="name" style={{ display: 'none' }} onChange={uploadToClient} />
             </div>
           </div>

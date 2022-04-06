@@ -87,7 +87,7 @@ export default function Map() {
           <div className="map-container">
             <div className="map" id="map"/>
           </div>
-          <span className="map-screenshot-button custom-button" id="button" onClick={onButtonClick}>Procesar imagen →</span>
+          <span className="map-screenshot-button custom-button" id="button" onClick={onButtonClick}>Process image →</span>
           <div className="map-container">
             <canvas id='prediction' className="map" />
           </div>
