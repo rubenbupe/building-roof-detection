@@ -1,0 +1,37 @@
+{
+  "name": "front",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "devFront": "cd ./front && next dev",
+    "startFront": "cd ./front && NODE_ENV=production node app.js",
+    "buildFront": "cd ./front && next build",
+    "lintFront": "cd ./front && next lint"
+  },
+  "dependencies": {
+    "@ionic/core": "^6.0.12",
+    "@tensorflow/tfjs": "^3.14.0",
+    "concurrently": "^7.0.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv-override": "5.0.1",
+    "express": "^4.17.3",
+    "http-errors": "^2.0.0",
+    "http-server": "^14.1.0",
+    "ionicons": "^6.0.1",
+    "leaflet": "^1.7.1",
+    "leaflet-simple-map-screenshoter": "^0.4.5",
+    "mongoose": "^6.2.9",
+    "next": "12.1.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-ionicons": "^4.2.0",
+    "sass": "^1.49.9",
+    "styled-components": "^5.3.3",
+    "winston": "^3.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.10.0",
+    "eslint-config-next": "12.1.0"
+  }
+}

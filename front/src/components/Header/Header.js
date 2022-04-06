@@ -1,39 +1,40 @@
 import React, {useState} from "react";
-import {navLinks} from "./data";
+import { navLinks } from "./data";
 import Link from "next/link";
-import {MapOutline, CloudUploadOutline, VideocamOutline, LogoGithub, GitBranch} from 'react-ionicons'
+import { MapOutline, CloudUploadOutline, LogoGithub, CodeSlashOutline } from 'react-ionicons'
 
 const serverTexts = {
-    true: 'Servidor', false: 'Cliente', def: 'Error'
+  true: 'Servidor', false: 'Cliente', def: 'Error'
 }
 
 const segmentationTexts = {
-    true: 'Instancia', false: 'Semántica', def: 'Error'
+  true: 'Instancia', false: 'Semántica', def: 'Error'
 }
 
-export default function Header({serverSwitch, setServerSwitch, segmentationSwitch, setSegmentationSwitch}) {
-    const icons = {
-        '/map': MapOutline, '/photo': CloudUploadOutline, '/video': VideocamOutline,
-    }
+export default function Header() {
+  const icons = {
+    '/map': MapOutline,
+    '/photo': CloudUploadOutline,
+    '/api-reference': CodeSlashOutline,
+  }
 
-    return (
-        <header className="header-container">
-            <div className="header-logo-container text-no-select">
-                <span className="header-logo">Reconocimiento</span>
-            </div>
-            <div className="header-nav-container">
-                <nav className="header-nav">
-                    {navLinks.map((link, index) => {
-                        const CurIcon = icons[link.path];
-                        return (<Link key={index} href={link.path}>
-                            <span className="header-nav-item text-no-select" key={index}><CurIcon
-                                className="header-nav-icon"/>{link.name}</span>
-                        </Link>);
-                    })}
+  return (
+    <header className="header-container">
+      <div className="header-logo-container text-no-select">
+        <span className="header-logo">Reconocimiento</span>
+      </div>
+      <div className="header-nav-container">
+      {navLinks.map((link, index) => {
+        const CurIcon = icons[link.path];
+        return (
+          <Link key={index} href={link.path}>
+            <a className="header-nav-item text-no-select" key={index}><CurIcon className="header-nav-icon" />{link.name}</a>
+          </Link>
+        );
+      })}
 
-                </nav>
-                <div className="header-toggle-container">
-                    <div className="header-toggle">
+                  <div className="header-toggle-container">
+                   <div className="header-toggle">
                         <label className="switch">
                             <input onChange={(e) => {
                                 setServerSwitch(e.target.checked);
@@ -53,8 +54,10 @@ export default function Header({serverSwitch, setServerSwitch, segmentationSwitc
                     </div>
                 </div>
             </div>
-            <Link href={'https://www.github.com'}>
-                <span className="header-nav-item text-no-select"><LogoGithub className="header-nav-icon"/>GitHub</span>
-            </Link>
-        </header>);
+
+      <Link href={'https://github.com/rubenbupe/proyectos-data'}>
+        <a target="_blank" className="header-nav-item header-nav-right text-no-select"><LogoGithub className="header-nav-icon" />GitHub</a>
+      </Link>
+    </header>
+  );
 }

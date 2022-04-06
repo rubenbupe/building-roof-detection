@@ -1,91 +1,129 @@
+@mixin max-width($width) {
+  @media screen and (max-width: $width) {
+      @content;
+  }
+}
+
 .main-container-photo {
   display: grid;
-  grid-template-columns: 1fr 5fr;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
   justify-items: center;
+  column-gap: 20px;
+  row-gap: 40px;
+}
 
-  .photo-upload-container {
-    min-width: 10%;
-    background-color: var(--w-color);
-    border-radius: 10px;
-    box-shadow: var(--box-shadow);
+@include max-width(1400px) {
+  .main-container-photo {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+
+
+
+.photo-upload-container {
+  min-width: 10%;
+  background-color: var(--w-color);
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px;
+  mix-blend-mode: screen;
+
+  .photo-upload-icon {
+    align-items: center;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 5px;
-    mix-blend-mode: screen;
+    margin: 10px 10px 0px 10px;
+    padding: 20px;
 
-    .photo-upload-icon {
-      align-items: center;
-      display: flex;
-      margin: 10px 10px 0 10px;
-      padding: 20px;
-
-      &:hover {
-        cursor: pointer;
-        background-color: var(--selected-background);
-        border-radius: 10px;
-      }
-    }
-
-    .photo-upload-text {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      min-height: 75px;
-      max-width: 200px;
-      padding: 0 30px;
-      text-align: center;
+    &:hover {
+      cursor: pointer;
+      background-color: var(--selected-background);
+      border-radius: 10px;
     }
   }
 
-  .prediction-container {
-    position: relative;
-    border-radius: 18px;
-    border: 8px solid var(--w-color);
-    background-color: var(--b-color);
-    height: fit-content;
+  .photo-upload-text {
+    flex: 1;
+    display: flex;
     align-items: center;
-    justify-items: center;
-    box-shadow: var(--box-shadow);
-
-    #mask-image {
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      right: 0;
-      width: 600px;
-      height: 600px;
-    }
-
-    #prediction {
-      opacity: 1;
-      mix-blend-mode: screen;
-      position: relative;
-      z-index: var(--map-mask);
-    }
-
-    .photo-slider-container {
-      background-color: var(--bg-color-2);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      border-radius: 0 0 8px 8px;
-
-      .custom-slider {
-        width: 80%;
-      }
-    }
+    min-height: 75px;
+    max-width: 200px;
+    padding: 0px 30px;
+    text-align: center;
   }
+}
 
-  .map {
+.prediction-container{
+  border-radius: 18px;
+  border: 8px solid var(--w-color);
+  box-shadow: var(--box-shadow);
+  background-color: var(--w-color);
+  height: fit-content;
+  align-items: center;
+  justify-items: center;
+  box-shadow: var(--box-shadow);
+}
+
+.prediction-container {
+  position: relative;
+  border-radius: 18px;
+  border: 8px solid var(--w-color);
+  background-color: var(--b-color);
+  height: fit-content;
+  align-items: center;
+  justify-items: center;
+  box-shadow: var(--box-shadow);
+
+  #mask-image {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
     width: 600px;
     height: 600px;
-    background-color: var(--w-color);
-    border-radius: 10px;
-    overflow: hidden;
-    z-index: var(--map-container);
+  }
+
+  #prediction {
+    opacity: 1;
+    mix-blend-mode: screen;
+    position: relative;
+    z-index: var(--map-mask);
+  }
+
+  .photo-slider-container {
+    background-color: var(--bg-color-2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0 0 8px 8px;
+
+    .custom-slider {
+      width: 80%;
+    }
+  }
+}
+
+.map {
+  width: 600px;
+  height: 600px;
+  background-color: var(--w-color);
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: var(--map-container);
+  display: block;
+}
+
+@include max-width(1400px) {
+  .map{
+    width: 300px;
+    height: 300px;
   }
 }
