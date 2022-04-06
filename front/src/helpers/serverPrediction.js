@@ -1,4 +1,4 @@
-export async function predictionRequest(model, inputImage, outputCanvas, segmentationSwitch) {
+export async function predictRequest(model, inputImage, outputCanvas, segmentationSwitch) {
     //make request || store base64 prediction
     let prediction = inputImage;
 

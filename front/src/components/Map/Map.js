@@ -82,20 +82,16 @@ export default function Map({serverSwitch, segmentationSwitch}) {
                         <canvas ref={maskImageOpacityRef} id='prediction' className="map"
                                 style={{width: "600px", height: "600px"}}/>
 
-                        {segmentationSwitch === false &&
-                            (
-                                <>
-                                    <canvas id='mask-image' className="map"/>
+                        {segmentationSwitch === false && (<>
+                            <canvas id='mask-image' className="map"/>
 
-                                    <div className="map-slider-container">
-                                        <input type="range" min="0" max="1" className="custom-slider" step="0.1"
-                                               onInput={(e) => {
-                                                   maskImageOpacityRef && (maskImageOpacityRef.current.style.opacity = e.target.value);
-                                               }}/>
-                                    </div>
-                                </>
-                            )
-                        }
+                            <div className="map-slider-container">
+                                <input type="range" min="0" max="1" className="custom-slider" step="0.1"
+                                       onInput={(e) => {
+                                           maskImageOpacityRef && (maskImageOpacityRef.current.style.opacity = e.target.value);
+                                       }}/>
+                            </div>
+                        </>)}
 
                     </div>
                 </div>
