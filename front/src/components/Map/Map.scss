@@ -28,6 +28,7 @@
 	width: max-content;
 	align-items: center;
 	justify-items: center;
+	position: relative;
 
   #prediction {
     opacity: 1;
@@ -67,6 +68,8 @@
 	overflow: hidden;
 	z-index: var(--map-container);
 	display: block;
+	background-color: var(--b-color);
+	
 }
 
 @include max-width(1400px) {

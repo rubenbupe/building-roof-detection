@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { navLinks } from "./data";
 import Link from "next/link";
 import { MapOutline, CloudUploadOutline, LogoGithub, CodeSlashOutline } from 'react-ionicons'
@@ -11,7 +11,7 @@ const segmentationTexts = {
   true: 'Instancia', false: 'Semántica', def: 'Error'
 }
 
-export default function Header() {
+export default function Header({ serverSwitch, setServerSwitch, segmentationSwitch, setSegmentationSwitch }) {
   const icons = {
     '/map': MapOutline,
     '/photo': CloudUploadOutline,
@@ -23,7 +23,6 @@ export default function Header() {
       <div className="header-logo-container text-no-select">
         <span className="header-logo">Reconocimiento</span>
       </div>
-      <div className="header-nav-container">
       {navLinks.map((link, index) => {
         const CurIcon = icons[link.path];
         return (
@@ -33,31 +32,29 @@ export default function Header() {
         );
       })}
 
-                  <div className="header-toggle-container">
-                   <div className="header-toggle">
-                        <label className="switch">
-                            <input onChange={(e) => {
-                                setServerSwitch(e.target.checked);
-                            }} checked={serverSwitch} type="checkbox"/>
-                            <span className="slider round"/>
-                        </label>
-                        <p id="switch-server">{serverTexts[serverSwitch] ?? serverTexts.def}</p>
-                    </div>
-                    <div className="header-toggle">
-                        <label className="switch">
-                            <input onChange={(e) => {
-                                setSegmentationSwitch(e.target.checked);
-                            }} checked={segmentationSwitch} type="checkbox"/>
-                            <span className="slider round"/>
-                        </label>
-                        <p id="switch-segmentation">{segmentationTexts[segmentationSwitch] ?? segmentationTexts.def}</p>
-                    </div>
-                </div>
-            </div>
-
-      <Link href={'https://github.com/rubenbupe/proyectos-data'}>
-        <a target="_blank" className="header-nav-item header-nav-right text-no-select"><LogoGithub className="header-nav-icon" />GitHub</a>
+    <Link href={'https://github.com/rubenbupe/proyectos-data'}>
+        <a target="_blank" className="header-nav-item text-no-select"><LogoGithub className="header-nav-icon" />GitHub</a>
       </Link>
+
+      <div className="header-toggle header-nav-right">
+        <label className="switch">
+          <input onChange={(e) => {
+            setServerSwitch(e.target.checked);
+          }} checked={serverSwitch} type="checkbox" />
+          <span className="slider round" />
+        </label>
+        <span className="switch-label" id="switch-server">{serverTexts[serverSwitch] ?? serverTexts.def}</span>
+      </div>
+
+      <div className="header-toggle">
+        <label className="switch">
+          <input onChange={(e) => {
+            setSegmentationSwitch(e.target.checked);
+          }} checked={segmentationSwitch} type="checkbox" />
+          <span className="slider round" />
+        </label>
+        <span className="switch-label" id="switch-segmentation">{segmentationTexts[segmentationSwitch] ?? segmentationTexts.def}</span>
+      </div>
     </header>
   );
 }

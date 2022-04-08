@@ -17,6 +17,7 @@ async function load_model() {
 
 export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
   const [model, setModel] = useState(null);
+  const [socket, setSocket] = useState(null);
   const maskImageOpacityRef = useRef();
 
   const uploadToClient = (event) => {
@@ -28,7 +29,7 @@ export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
 
         i.onload = async function () {
           // TODO: fixear imagenes muy grandes (falla con 10k x 10k)
-          await toggleStrategy.toggleStrategy(model, i, 'prediction', segmentationSwitch, serverSwitch);
+          await toggleStrategy.toggleStrategy(model, i, 'prediction', segmentationSwitch, serverSwitch, socket);
         };
         i.src = image_b64;
       })
@@ -39,8 +40,13 @@ export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
     document.getElementById('file-input').click();
   }
 
-  useEffect(() => {
+  useEffect(async () => {
     tf.setBackend('webgl');
+    const { io } = await import("socket.io-client");
+
+    const mysocket = io("https://api.reconocimientodelmedio.es");
+    setSocket(mysocket);
+
     load_model().then(model => {
       setModel(model);
     });

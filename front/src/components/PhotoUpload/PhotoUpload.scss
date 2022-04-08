@@ -110,20 +110,3 @@
     }
   }
 }
-
-.map {
-  width: 600px;
-  height: 600px;
-  background-color: var(--w-color);
-  border-radius: 10px;
-  overflow: hidden;
-  z-index: var(--map-container);
-  display: block;
-}
-
-@include max-width(1400px) {
-  .map{
-    width: 300px;
-    height: 300px;
-  }
-}

@@ -17,6 +17,7 @@ async function load_model() {
 
 export default function Map({serverSwitch, segmentationSwitch}) {
   const [screenshotter, setScreenshotter] = useState(null);
+  const [socket, setSocket] = useState(null);
   const [model, setModel] = useState(null);
   const maskImageOpacityRef = useRef();
 
@@ -28,7 +29,7 @@ export default function Map({serverSwitch, segmentationSwitch}) {
         let i = new Image();
 
         i.onload = async function () {
-          await toggleStrategy.toggleStrategy(model, i, 'prediction', segmentationSwitch, serverSwitch);
+          await toggleStrategy.toggleStrategy(model, i, 'prediction', segmentationSwitch, serverSwitch, socket);
         };
         i.src = image;
       }).catch(e => {
@@ -39,8 +40,12 @@ export default function Map({serverSwitch, segmentationSwitch}) {
 
   useEffect(async () => {
     tf.setBackend('webgl');
+    const { io } = await import("socket.io-client");
     const L = await import('leaflet');
     const {SimpleMapScreenshoter} = await import('leaflet-simple-map-screenshoter');
+
+    const mysocket = io("https://api.reconocimientodelmedio.es");
+    setSocket(mysocket);
 
     const map = L.map("map").setView([40.419215, -3.693358], 13);
 

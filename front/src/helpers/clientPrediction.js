@@ -7,7 +7,6 @@ export const watershed = (feature, tensor, output_canvas, watershed_toggle) => {
 
         console.log(watershed_toggle);
         if (watershed_toggle) {
-            console.log('waterse');
             let feature_img = new cv.imread(feature);
             let src = new cv.imread(canvas);
             let dst = new cv.Mat();
@@ -123,7 +122,6 @@ export const renderPredictions = (feature, predictions, output_canvas, watershed
 };
 
 export const predictImage = (model, i, output_canvas, watershed_toggle) => {
-    console.log('gritos de dolor', watershed_toggle);
     if (model == null) {
         return;
     }
