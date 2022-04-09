@@ -44,10 +44,10 @@ export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
     tf.setBackend('webgl');
     const { io } = await import("socket.io-client");
 
-    const mysocket = io("https://api.reconocimientodelmedio.es");
+    const mysocket = io("https://api.reconocimientodelmedio.es/");
 
     mysocket.on('connect', function () {
-      console.log('conectau');
+      console.log('conectado');
     })
     setSocket(mysocket);
 

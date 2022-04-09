@@ -55,7 +55,7 @@ def prediction_semantic():
 
 @socketio.on('image')
 def image(params):
-    print('ksjdnfjk')
+    print('prediccion')
     (data_image, watershed) = params
     img = image_helper.base64_to_numpy(data_image)
     original_shape = img.shape
