@@ -55,6 +55,7 @@ def prediction_semantic():
 
 @socketio.on('image')
 def image(params):
+    print('ksjdnfjk')
     (data_image, watershed) = params
     img = image_helper.base64_to_numpy(data_image)
     original_shape = img.shape
@@ -73,6 +74,6 @@ def image(params):
 
 if __name__ == '__main__':
     if os.environ.get('FLASK_ENV') == 'production':
-        socketio.run(app, debug=False, host='0.0.0.0') 
+        socketio.run(app, debug=False, host='0.0.0.0', port=3000) 
     else:
-        socketio.run(app, port=3000) 
+        socketio.run(app, host='0.0.0.0', port=5000) 

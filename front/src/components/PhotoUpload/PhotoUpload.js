@@ -27,7 +27,7 @@ export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
       ImageHelper.blobToBase64(image_blob).then(image_b64 => {
         let i = new Image();
 
-        i.onload = async function () {
+        i.onload = async () => {
           // TODO: fixear imagenes muy grandes (falla con 10k x 10k)
           await toggleStrategy.toggleStrategy(model, i, 'prediction', segmentationSwitch, serverSwitch, socket);
         };
@@ -45,6 +45,10 @@ export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
     const { io } = await import("socket.io-client");
 
     const mysocket = io("https://api.reconocimientodelmedio.es");
+
+    mysocket.on('connect', function () {
+      console.log('conectau');
+    })
     setSocket(mysocket);
 
     load_model().then(model => {

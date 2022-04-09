@@ -15,6 +15,8 @@ export async function predictRequest(model, inputImage, outputCanvas, segmentati
     
         feature_img.delete();
     });
-    console.log(img_b64)
+
+    console.log(socket);
+    //console.log(img_b64)
     socket.emit('image', [img_b64, false]);
 }
