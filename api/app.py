@@ -55,7 +55,6 @@ def prediction_semantic():
 
 @socketio.on('image')
 def image(params):
-    print('prediccion')
     (data_image, watershed) = params
     img = image_helper.base64_to_numpy(data_image)
     original_shape = img.shape
@@ -64,6 +63,7 @@ def image(params):
     if watershed:
         markers = watershed_helper.watershed(prediction)
         markers[markers == -1] = 255
+        markers = markers.astype(np.uint8)
         markers = cv2.resize(markers, (original_shape[1], original_shape[0])) # Devuelve la imagen al tamaño original
         stringData = image_helper.numpy_to_base64(markers)
     else:

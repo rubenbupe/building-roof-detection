@@ -21,5 +21,6 @@ export async function predictRequest(model, inputImage, outputCanvas, segmentati
         i.src = res_b64;
     });
 
-    socket.emit('image', [img_b64, false]);
+    console.log(segmentationSwitch)
+    socket.emit('image', [img_b64, segmentationSwitch]);
 }
