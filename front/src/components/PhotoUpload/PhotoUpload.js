@@ -4,9 +4,10 @@ import React, { useEffect, useState, useRef } from "react";
 import Header from '../Header/Header';
 import * as ImageHelper from '../../helpers/images';
 import * as tf from '@tensorflow/tfjs';
-import { CloudUploadOutline, } from 'react-ionicons'
+import { CloudUploadOutline, ColorWandOutline, } from 'react-ionicons'
 import * as toggleStrategy from '../../helpers/toggleStrategy.js';
 
+const API_URI = process.env.NEXT_PUBLIC_API_URI;
 
 async function load_model() {
   const model = await tf.loadLayersModel("models/model.json");
@@ -40,15 +41,21 @@ export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
     document.getElementById('file-input').click();
   }
 
-  useEffect(async () => {
+  useEffect( async () => {
     tf.setBackend('webgl');
     const { io } = await import("socket.io-client");
 
-    const mysocket = io("https://api.reconocimientodelmedio.es/");
+
+    const mysocket = io(API_URI);
 
     mysocket.on('connect', function () {
-      console.log('conectado');
+      console.log('Se ha extablecido la conexión con el servidor');
     })
+
+    mysocket.on("disconnect", (razón) => {
+      console.log('Se ha cortado la conexión con el servidor', razón);
+    });
+    
     setSocket(mysocket);
 
     load_model().then(model => {

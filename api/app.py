@@ -9,7 +9,7 @@ from helpers import image as image_helper
 from helpers import watershed as watershed_helper
 from helpers import predictions as prediction_helper
 app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins="*")
+socketio = SocketIO(app, cors_allowed_origins="*", max_http_buffer_size=1e8)#, async_handlers=True, engineio_logger=True)
 
 
 @app.route('/predictions/instance', methods=['GET'])

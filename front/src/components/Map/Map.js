@@ -7,6 +7,7 @@ import React, { useEffect, useState, useRef } from "react";
 import * as tf from '@tensorflow/tfjs';
 import * as toggleStrategy from '../../helpers/toggleStrategy.js';
 
+const API_URI = process.env.NEXT_PUBLIC_API_URI;
 
 
 async function load_model() {
@@ -44,7 +45,16 @@ export default function Map({serverSwitch, segmentationSwitch}) {
     const L = await import('leaflet');
     const {SimpleMapScreenshoter} = await import('leaflet-simple-map-screenshoter');
 
-    const mysocket = io("https://api.reconocimientodelmedio.es");
+    const mysocket = io(API_URI);
+
+    mysocket.on('connect', function () {
+      console.log('Se ha extablecido la conexión con el servidor');
+    })
+
+    mysocket.on("disconnect", (razón) => {
+      console.log('Se ha cortado la conexión con el servidor', razón);
+    });
+    
     setSocket(mysocket);
 
     const map = L.map("map").setView([40.419215, -3.693358], 13);

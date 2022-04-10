@@ -4,19 +4,22 @@ export async function predictRequest(model, inputImage, outputCanvas, segmentati
     //make request || store base64 prediction
 
     const img_b64 = inputImage.src.split(',')[1];
-    console.log('cosas');
+    console.log('Realizando predicción en servidor');
     socket.on("image_response", (res_b64) => {
-        console.log('nsdjknc')
-        let prediction = res_b64;
-
+        console.log('Predicción recibida')
         //output on canvas
-        let feature_img = new cv.imread(prediction);
-        cv.imshow(outputCanvas, feature_img);
-    
-        feature_img.delete();
+
+        let i = new Image();
+
+        i.onload = async () => {
+          // TODO: fixear imagenes muy grandes (falla con 10k x 10k)
+          let feature_img = new cv.imread(i);
+          cv.imshow('prediction', feature_img);
+      
+          feature_img.delete();
+        };
+        i.src = res_b64;
     });
 
-    console.log(socket);
-    //console.log(img_b64)
     socket.emit('image', [img_b64, false]);
 }
