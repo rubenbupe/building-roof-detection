@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metrics-api
+  labels:
+    app: metrics-api
+spec:
+  selector:
+    matchLabels:
+      app: metrics-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: metrics-api
+    spec:
+      containers:
+        - name: metrics-api
+          image: ENV_IMAGE
+          ports:
+            - containerPort: 3000
+          env:
+            - name: APP
+              value: METRICS
+
+            - name: DATABASE_URI
+              value: ENV_DATABASE_URI
+            - name: RABBIT_URI
+              value: ENV_RABBIT_URI
+      nodeSelector:
+        cloud.google.com/gke-nodepool: default-pool
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: metrics-api
+  namespace: default
+  labels:
+    app: metrics-api
+spec:
+  selector:
+    app: metrics-api
+  ports:
+    - protocol: TCP
+      port: 30003
+      targetPort: 3000
+  type: NodePort

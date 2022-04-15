@@ -6,11 +6,14 @@
     "devFront": "cd ./front && next dev",
     "startFront": "cd ./front && NODE_ENV=production node app.js",
     "buildFront": "cd ./front && next build",
-    "lintFront": "cd ./front && next lint"
+    "lintFront": "cd ./front && next lint",
+    "devMetrics": "cd ./metrics && PORT=3003 NODE_ENV=local nodemon app.js",
+    "startMetrics": "cd ./metrics && NODE_ENV=production node app.js"
   },
   "dependencies": {
     "@ionic/core": "^6.0.12",
     "@tensorflow/tfjs": "^3.14.0",
+    "amqplib": "^0.8.0",
     "concurrently": "^7.0.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -23,8 +26,8 @@
     "leaflet-simple-map-screenshoter": "^0.4.5",
     "mongoose": "^6.2.9",
     "next": "12.1.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
     "react-ionicons": "^4.2.0",
     "sass": "^1.49.9",
     "socket.io-client": "^4.3.2",
@@ -33,6 +36,7 @@
   },
   "devDependencies": {
     "eslint": "^8.10.0",
-    "eslint-config-next": "12.1.0"
+    "eslint-config-next": "12.1.0",
+    "nodemon": "^2.0.15"
   }
 }

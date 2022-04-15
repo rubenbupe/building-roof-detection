@@ -8,7 +8,7 @@ module.exports = function(){
             return dotenv.config({ path: path.join(__dirname, 'production.env'), override: true });
 
         default:
-            return dotenv.config({ path: path.join(__dirname, 'production.env'), override: true });
+            return dotenv.config({ path: path.join(__dirname, 'local.env'), override: true });
     }
 };
 // SECRET GENERATOR  ==>  require('crypto').randomBytes(64).toString('hex')

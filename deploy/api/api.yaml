@@ -25,8 +25,8 @@ spec:
 
             - name: DATABASE_URI
               value: ENV_DATABASE_URI
-            - name: TURN_DATABASE_URI
-              value: ENV_TURN_DATABASE_URI
+            - name: RABBIT_URI
+              value: ENV_RABBIT_URI
           resources:
             requests:
               cpu: 150m
