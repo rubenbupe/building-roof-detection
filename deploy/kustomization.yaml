@@ -2,19 +2,15 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  # API app
   - ./api/api.yaml
 
-  # Front app
   - ./front/server.yaml
 
-  # Nginx Ingress
   - ./ingress/cert-manager.yaml
   - ./ingress/certificate.yaml
   - ./ingress/ingress.yaml
   - ./ingress/nginx-ingress.yaml
 
-  # MongoDB
   - ./db/1-database-namespace.yaml
   - ./db/2-mongodb-secrets.yaml
   - ./db/3-mongodb-serviceaccount.yaml
@@ -25,13 +21,11 @@ resources:
   - ./db/8-arbiter-headless-svc.yaml
   - ./db/9-monogodb-metrics-svc.yaml
 
-  # RabbitMQ
   - ./rabbitmq/rabbitmq-configmap.yaml
   - ./rabbitmq/rabbitmq-rbac.yaml
   - ./rabbitmq/rabbitmq-secret.yaml
   - ./rabbitmq/rabbitmq-statefulset.yaml
 
-  # Metrics api / Grafana dashboard
   - ./metrics/metrics-api.yaml
   - ./metrics/grafana.yaml
 
