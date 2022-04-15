@@ -19,7 +19,7 @@ WORKDIR /app
 COPY ./package*.json /app/
 # Copy app files
 COPY . /app
-RUN npm install
+RUN npm install --only=prod
 # Build front
 RUN REACT_APP_API_HOST=${HOST_API} REACT_APP_AUTH_HOST=${HOST_AUTH} npm run buildFront
 # Expose port

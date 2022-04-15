@@ -24,9 +24,9 @@ spec:
               value: METRICS
 
             - name: DATABASE_URI
-              value: ENV_DATABASE_URI
+              value: mongodb://reconocimiento:secreto@mongodb-0.mongodb-headless.database:27017/reconocimiento
             - name: RABBIT_URI
-              value: ENV_RABBIT_URI
+              value: amqp://guest:guest@rabbitmq-0.rabbitmq.rabbits.svc.cluster.local:5672/
       nodeSelector:
         cloud.google.com/gke-nodepool: default-pool
 
