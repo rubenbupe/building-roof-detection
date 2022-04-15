@@ -19,8 +19,6 @@ on:
 env:
   GKE_PROJECT: ${{ secrets.GKE_PROJECT }}
   GKE_EMAIL: ${{ secrets.GKE_EMAIL }}
-  SECRET_DATABASE_URI: ${{ secrets.DATABASE_URI }}
-  SECRET_RABBIT_URI: ${{ secrets.RABBIT_URI }}
   GITHUB_SHA: ${{ github.sha }}
   GKE_ZONE: europe-west2-a
   REGISTRY_HOSTNAME: gcr.io

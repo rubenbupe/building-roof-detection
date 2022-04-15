@@ -25,6 +25,14 @@ resources:
   - ./db/8-arbiter-headless-svc.yaml
   - ./db/9-monogodb-metrics-svc.yaml
 
+  # RabbitMQ
+  - ./rabbitmq/rabbitmq-configmap.yaml
+  - ./rabbitmq/rabbitmq-rbac.yaml
+  - ./rabbitmq/rabbitmq-secret.yaml
+  - ./rabbitmq/rabbitmq-statefulset.yaml
 
+  # Metrics api / Grafana dashboard
+  - ./metrics/metrics-api.yaml
+  - ./metrics/grafana.yaml
 
 
