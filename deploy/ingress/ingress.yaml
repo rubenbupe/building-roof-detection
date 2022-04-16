@@ -26,6 +26,7 @@ spec:
         - api.reconocimientodelmedio.es
         - mq.reconocimientodelmedio.es
         - metrics.reconocimientodelmedio.es
+        - api.metrics.reconocimientodelmedio.es
       secretName: reconocimiento-tls
   rules:
     - host: www.reconocimientodelmedio.es
@@ -58,6 +59,16 @@ spec:
                 name: rabbitmq-manage
                 port:
                   number: 30002
+    - host: api.metrics.reconocimientodelmedio.es
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: metrics-api
+                port:
+                  number: 30003
     - host: metrics.reconocimientodelmedio.es
       http:
         paths:
