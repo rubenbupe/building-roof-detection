@@ -31,9 +31,6 @@ spec:
             requests:
               cpu: 150m
               memory: 512Mi
-            limits:
-              cpu: 200m
-              memory: 1800Mi
       nodeSelector:
         cloud.google.com/gke-nodepool: default-pool
 
@@ -65,7 +62,7 @@ spec:
     kind: Deployment
     name: api
   minReplicas: 1
-  maxReplicas: 5
+  maxReplicas: 3
   metrics:
     - type: Resource
       resource:
