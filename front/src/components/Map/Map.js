@@ -6,6 +6,11 @@ import React, { useEffect, useState, useRef } from "react";
 //import { SimpleMapScreenshoter } from "leaflet-simple-map-screenshoter";
 import * as tf from '@tensorflow/tfjs';
 import * as toggleStrategy from '../../helpers/toggleStrategy.js';
+import { map } from "leaflet";
+import { fetchPlace } from './fetchPlace';
+import { SearchOutline } from 'react-ionicons'
+
+
 
 const API_URI = process.env.NEXT_PUBLIC_API_URI;
 
@@ -21,6 +26,12 @@ export default function Map({serverSwitch, segmentationSwitch}) {
   const [socket, setSocket] = useState(null);
   const [model, setModel] = useState(null);
   const maskImageOpacityRef = useRef();
+  const [city, setCity] = useState([]);
+  const [autocompleteCities, setAutocompleteCities] = useState([]);
+  const [autocompleteErr, setAutocompleteErr] = useState([]);
+
+  
+  const access_key= '3f7755a8072884f2e602f8b9086e2038';
 
   const onButtonClick = () => {
     screenshotter?.takeScreen('image', {})
@@ -45,7 +56,9 @@ export default function Map({serverSwitch, segmentationSwitch}) {
     const L = await import('leaflet');
     const {SimpleMapScreenshoter} = await import('leaflet-simple-map-screenshoter');
 
-    const mysocket = io(API_URI);
+
+
+      const mysocket = io(API_URI);
 
     mysocket.on('connect', function () {
       console.log('Se ha extablecido la conexión con el servidor');
@@ -57,7 +70,9 @@ export default function Map({serverSwitch, segmentationSwitch}) {
     
     setSocket(mysocket);
 
-    const map = L.map("map").setView([40.419215, -3.693358], 13);
+    
+    
+    map = L.map("map").setView([40.419215, -3.693358], 13);
 
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
       maxZoom: 19,
@@ -85,6 +100,48 @@ export default function Map({serverSwitch, segmentationSwitch}) {
 
   }, []);
 
+
+
+  const handleCityChange = async (e) => {
+    setCity(e.target.value);
+    if (!city) return;
+
+    const res = await fetchPlace(city);
+    !autocompleteCities.includes(e.target.value) &&
+      res.features &&
+      setAutocompleteCities(res.features.map((place) => place.place_name));
+    res.error ? setAutocompleteErr(res.error) : setAutocompleteErr("");
+  };
+
+  const handleClick = () =>{
+
+  const query= document.getElementById("city").value;
+  var hasNumber = /\d/;
+  if (hasNumber.test(query)){
+    const coords = query.split(",");
+    
+    const lat =coords[0];
+    const lon = coords[1];
+
+    
+    map.setView([lat, lon], 13);
+  }
+  else{
+  fetch('http://api.positionstack.com/v1/forward?access_key='+ access_key + '&query='+ query)
+  .then(response => response.json())
+  .then(data => {
+
+      const lat =data.data[0].latitude;
+      const lon = data.data[0].longitude;
+
+      
+      map.setView([lat, lon], 13);
+
+     });
+    
+    }
+  }
+
   return (
     <div>
         <Head>
@@ -97,6 +154,30 @@ export default function Map({serverSwitch, segmentationSwitch}) {
             <title>Proyecto Reconocimiento</title>
         </Head>
         <main>
+
+     
+      <div className="places-autocomplete">
+        <div className="places-autocomplete__inputWrap">
+          <input
+            list="places"
+            type="text"
+            id="city"
+            className="custom-search "
+            onChange={handleCityChange}
+          />
+          <datalist  id="places">
+            {autocompleteCities.map((city, i) => (
+              <option key={i}>{city}</option>
+            ))}
+          </datalist>
+          <button
+            className="custom-search-button " onClick={handleClick}   height="30px"  width="30px"
+          ><SearchOutline/>
+        </button>
+        </div>
+
+
+          </div>
             <div className="main-container-map">
                 <div className="map-container">
                     <div className="map" id="map" style={{width: "600px", height: "600px"}}/>
@@ -120,4 +201,4 @@ export default function Map({serverSwitch, segmentationSwitch}) {
             </div>
         </main>
     </div>);
-}
+  }
