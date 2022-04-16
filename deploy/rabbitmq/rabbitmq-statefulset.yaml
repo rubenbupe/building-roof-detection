@@ -5,7 +5,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: rabbitmq
-  namespace: rabbits
+  namespace: default
 spec:
   serviceName: rabbitmq
   replicas: 1
@@ -92,7 +92,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: rabbitmq
-  namespace: rabbits
+  namespace: default
 spec:
   clusterIP: None
   ports:
@@ -110,7 +110,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: rabbitmq-manage
-  namespace: rabbits
+  namespace: default
   labels:
     app: rabbitmq
 spec:

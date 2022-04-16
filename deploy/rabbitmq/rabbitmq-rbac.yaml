@@ -4,13 +4,13 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: rabbitmq
-  namespace: rabbits
+  namespace: default
 ---
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: rabbitmq
-  namespace: rabbits
+  namespace: default
 rules:
 - apiGroups: 
     - ""
@@ -25,11 +25,11 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: rabbitmq
-  namespace: rabbits
+  namespace: default
 subjects:
 - kind: ServiceAccount
   name: rabbitmq
-  namespace: rabbits
+  namespace: default
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
