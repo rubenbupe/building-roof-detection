@@ -110,7 +110,7 @@ metadata:
   name: rabbitmq-manage
   namespace: default
   labels:
-    app: rabbitmq-manage
+    app: rabbitmq
 spec:
   selector:
     app: rabbitmq
