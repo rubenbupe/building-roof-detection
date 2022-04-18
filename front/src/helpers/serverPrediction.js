@@ -24,14 +24,17 @@ export async function predictRequest(model, inputImage, outputCanvas, segmentati
                 let feature_img = new cv.imread(inputImage);
                 let prediction = new cv.imread(i);
                 let prediction_gray = new cv.Mat();
+                let inverted_prediction_gray = new cv.Mat();
 
                 cv.cvtColor(prediction, prediction_gray, cv.COLOR_RGBA2GRAY, 0);
-                cv.imshow(outputCanvas, prediction_gray);
+                cv.bitwise_not(prediction_gray, inverted_prediction_gray);
+                cv.imshow(outputCanvas, inverted_prediction_gray);
                 cv.imshow('mask-image', feature_img);
 
                 feature_img.delete();
                 prediction.delete();
                 prediction_gray.delete();
+                inverted_prediction_gray.delete();
             }
         };
         i.src = res_b64;
