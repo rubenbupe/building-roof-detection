@@ -21,10 +21,12 @@ export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
   const [model, setModel] = useState(null);
   const [socket, setSocket] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [photoUploaded, setPhotoUploaded] = useState(false);
   const maskImageOpacityRef = useRef();
 
   const uploadToClient = (event) => {
       setIsLoading(true);
+      setPhotoUploaded(true);
     if (event.target.files && event.target.files[0]) {
       const image_blob = event.target.files[0];
 
@@ -58,7 +60,7 @@ export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
     mysocket.on("disconnect", (razón) => {
       console.log('Se ha cortado la conexión con el servidor', razón);
     });
-    
+
     setSocket(mysocket);
 
     load_model().then(model => {
@@ -86,6 +88,7 @@ export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
                     </div>
                 </div>
                 }
+                {photoUploaded ?
                 <div className='prediction-container'>
                     <canvas ref={maskImageOpacityRef} id='prediction' className='map'/>
                     {segmentationSwitch === false && (<>
@@ -99,6 +102,7 @@ export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
                         </div>
                     </>)}
                 </div>
+                : <></>}
             </div>
         </main>
     </div>)

@@ -5,12 +5,11 @@
 }
 
 .main-container-photo {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-items: center;
-  column-gap: 20px;
-  row-gap: 40px;
+  justify-content: space-evenly;
+  width: 100%;
 
   .photo-upload-icon {
     svg {
@@ -109,16 +108,13 @@
   }
 }
 
-@include max-width(1400px) {
+@include max-width(1550px) {
   .main-container-photo {
-    display: flex;
     flex-direction: column-reverse;
-    align-items: center;
-    justify-content: center;
 
     .prediction-container {
       overflow: hidden;
-      margin: 0 20px 0 20px;
+      margin: 0 20px 40px 20px;
 
       .map {
         max-width: 100% !important;
