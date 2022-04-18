@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Spinner from "../Spinner/Spinner";
 import Script from "next/script";
 import dynamic from 'next/dynamic'
 import React, { useEffect, useState, useRef } from "react";
@@ -20,9 +21,11 @@ export default function Map({serverSwitch, segmentationSwitch}) {
   const [screenshotter, setScreenshotter] = useState(null);
   const [socket, setSocket] = useState(null);
   const [model, setModel] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const maskImageOpacityRef = useRef();
 
   const onButtonClick = () => {
+    setIsLoading(true);
     screenshotter?.takeScreen('image', {})
       .then(image => {
         if (model == null) { return; }
@@ -30,11 +33,12 @@ export default function Map({serverSwitch, segmentationSwitch}) {
         let i = new Image();
 
         i.onload = async function () {
-          await toggleStrategy.toggleStrategy(model, i, 'prediction', segmentationSwitch, serverSwitch, socket);
+          await toggleStrategy.toggleStrategy(model, i, 'prediction', segmentationSwitch, serverSwitch, socket, setIsLoading);
         };
         i.src = image;
       }).catch(e => {
-        console.error(e.toString())
+        console.error(e.toString());
+        setIsLoading(false);
       })
   };
 
@@ -101,7 +105,8 @@ export default function Map({serverSwitch, segmentationSwitch}) {
                 <div className="map-container">
                     <div className="map" id="map" style={{width: "600px", height: "600px"}}/>
                 </div>
-                <span className="map-screenshot-button custom-button" id="button" onClick={onButtonClick}>Procesar imagen →</span>
+                {isLoading ? <Spinner /> :
+                    <span className="map-screenshot-button custom-button" id="button" onClick={onButtonClick}>Procesar imagen →</span>}
                 <div className="map-container">
                     <canvas ref={maskImageOpacityRef} id='prediction' className="map"
                             style={{width: "600px", height: "600px"}}/>

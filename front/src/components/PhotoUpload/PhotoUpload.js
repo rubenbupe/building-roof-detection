@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Spinner from "../Spinner/Spinner";
 import dynamic from 'next/dynamic'
 import React, { useEffect, useState, useRef } from "react";
 import Header from '../Header/Header';
@@ -19,9 +20,11 @@ async function load_model() {
 export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
   const [model, setModel] = useState(null);
   const [socket, setSocket] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const maskImageOpacityRef = useRef();
 
   const uploadToClient = (event) => {
+      setIsLoading(true);
     if (event.target.files && event.target.files[0]) {
       const image_blob = event.target.files[0];
 
@@ -30,7 +33,7 @@ export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
 
         i.onload = async () => {
           // TODO: fixear imagenes muy grandes (falla con 10k x 10k)
-          await toggleStrategy.toggleStrategy(model, i, 'prediction', segmentationSwitch, serverSwitch, socket);
+          await toggleStrategy.toggleStrategy(model, i, 'prediction', segmentationSwitch, serverSwitch, socket, setIsLoading);
         };
         i.src = image_b64;
       })
@@ -72,6 +75,7 @@ export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
         </Head>
         <main>
             <div className='main-container-photo'>
+                {isLoading ? <Spinner /> :
                 <div className='shadow-container'>
                     <div className='photo-upload-container'>
                         <CloudUploadOutline height={'175px'} width={'175px'} className='photo-upload-icon'
@@ -81,6 +85,7 @@ export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
                                onChange={uploadToClient}/>
                     </div>
                 </div>
+                }
                 <div className='prediction-container'>
                     <canvas ref={maskImageOpacityRef} id='prediction' className='map'/>
                     {segmentationSwitch === false && (<>

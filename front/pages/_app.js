@@ -5,6 +5,7 @@ import '../src/components/Header/Header.scss';
 import '../src/components/Footer/Footer.scss';
 import '../src/components/Map/Map.scss';
 import '../src/components/PhotoUpload/PhotoUpload.scss';
+import '../src/components/Spinner/Spinner.scss';
 
 function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />
