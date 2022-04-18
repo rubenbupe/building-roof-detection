@@ -1,8 +1,6 @@
 import {image} from "@tensorflow/tfjs";
 
 export async function predictRequest(model, inputImage, outputCanvas, segmentationSwitch, socket) {
-    //make request || store base64 prediction
-
     const img_b64 = inputImage.src.split(',')[1];
     console.log('Realizando predicción en servidor');
     socket.on("image_response", (res_b64) => {
@@ -39,7 +37,5 @@ export async function predictRequest(model, inputImage, outputCanvas, segmentati
         };
         i.src = res_b64;
     });
-
-    console.log(segmentationSwitch)
     socket.emit('image', [img_b64, segmentationSwitch]);
 }

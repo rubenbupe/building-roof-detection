@@ -74,6 +74,11 @@
   justify-items: center;
   box-shadow: var(--box-shadow);
 
+  .map{
+    height: 600px;
+    width: 600px;
+  }
+
   #mask-image {
     position: absolute;
     left: 0;
