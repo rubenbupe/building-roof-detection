@@ -1,4 +1,5 @@
 import '../styles/globals.scss'
+import '../styles/input-styling.scss';
 
 import '../src/components/Header/Header.scss';
 import '../src/components/Footer/Footer.scss';

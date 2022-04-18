@@ -1,32 +1,32 @@
 @mixin max-width($width) {
-    @media screen and (max-width: $width) {
-        @content;
-    }
+  @media screen and (max-width: $width) {
+    @content;
+  }
 }
 
-.main-container-map{
-	display: grid;
-	grid-template-columns: 5fr 2fr 5fr;
-	column-gap: 20px;
-	row-gap: 40px;
+.main-container-map {
+  display: grid;
+  grid-template-columns: 5fr 2fr 5fr;
+  column-gap: 20px;
+  row-gap: 40px;
 }
 
 @include max-width(1400px) {
-	.main-container-map{
-		grid-template-columns: 1fr;
-	}
+  .main-container-map {
+    grid-template-columns: 1fr;
+  }
 }
 
-.map-container{
-	border-radius: 18px;
-	border: 8px solid var(--w-color);
-	box-shadow: var(--box-shadow);
-	background-color: var(--b-color);
-	height: fit-content;
-	width: max-content;
-	align-items: center;
-	justify-items: center;
-	position: relative;
+.map-container {
+  border-radius: 18px;
+  border: 8px solid var(--w-color);
+  box-shadow: var(--box-shadow);
+  background-color: var(--b-color);
+  height: fit-content;
+  width: max-content;
+  align-items: center;
+  justify-items: center;
+  position: relative;
 
   #prediction {
     opacity: 1;
@@ -46,63 +46,64 @@
   }
 
   .map-slider-container {
-    background-color: var(--bg-color-2);
+    background-color: var(--w-color);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-top: 5px;
     border-radius: 0 0 8px 8px;
 
     .custom-slider {
-      width: 80%;
+      z-index: var(--slider);
     }
   }
 }
 
 .map {
-	width: 600px;
-	height: 600px;
-	border-radius: 10px;
-	overflow: hidden;
-	z-index: var(--map-container);
-	display: block;
-	background-color: var(--b-color);
-	
+  width: 600px;
+  height: 600px;
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: var(--map-container);
+  display: block;
+  background-color: var(--b-color);
+
 }
 
 @include max-width(1400px) {
-	.map{
-	  width: 300px;
-	  height: 300px;
-	}
+  .map {
+    width: 300px;
+    height: 300px;
+  }
 }
 
-.leaflet-pane, .leaflet-bottom, .leaflet-tile-container{
-	z-index: var(--map);
+.leaflet-pane, .leaflet-bottom, .leaflet-tile-container {
+  z-index: var(--map);
 }
 
 .leaflet-control-zoom {
-	border: none;
-	opacity: 0.9;
+  border: none;
+  opacity: 0.9;
 }
 
-.leaflet-control-zoom-in{
-	background-color: var(--w-color);
-	border-radius: 5px 5px 0px 0px !important;
+.leaflet-control-zoom-in {
+  background-color: var(--w-color);
+  border-radius: 5px 5px 0px 0px !important;
 }
 
-.leaflet-control-zoom-out{
-	background-color: var(--w-color);
-	border-radius: 0px 0px 5px 5px !important;
+.leaflet-control-zoom-out {
+  background-color: var(--w-color);
+  border-radius: 0px 0px 5px 5px !important;
 }
 
-.leaflet-bottom{
-	display: none;
+.leaflet-bottom {
+  display: none;
 }
 
-.map-screenshot-button{
-	height: fit-content;
-	align-self: center;
-	justify-self: center;
-	max-width: 50%;
+.map-screenshot-button {
+  height: fit-content;
+  align-self: center;
+  justify-self: center;
+  max-width: 50%;
 }
