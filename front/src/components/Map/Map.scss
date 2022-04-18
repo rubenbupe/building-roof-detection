@@ -28,10 +28,15 @@
   justify-items: center;
   position: relative;
 
+  #map{
+    border-radius: 10px;
+  }
+
   #prediction {
     opacity: 1;
     mix-blend-mode: screen;
     position: relative;
+    border-radius: 10px 10px 0 0;
     z-index: var(--map-mask);
   }
 
@@ -43,6 +48,7 @@
     right: 0;
     width: 600px;
     height: 600px;
+    border-radius: 10px 10px 0 0;
   }
 
   .map-slider-container {
@@ -63,7 +69,6 @@
 .map {
   width: 600px;
   height: 600px;
-  border-radius: 10px;
   overflow: hidden;
   z-index: var(--map-container);
   display: block;

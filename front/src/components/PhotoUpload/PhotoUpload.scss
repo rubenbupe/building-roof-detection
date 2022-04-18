@@ -88,10 +88,12 @@
     right: 0;
     width: 600px;
     height: 600px;
+    border-radius: 10px 10px 0 0;
   }
 
   #prediction {
     opacity: 1;
+    border-radius: 10px 10px 0 0;
     mix-blend-mode: screen;
     position: relative;
     z-index: var(--map-mask);
