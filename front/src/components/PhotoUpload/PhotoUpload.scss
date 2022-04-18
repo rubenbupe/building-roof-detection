@@ -1,6 +1,6 @@
 @mixin max-width($width) {
   @media screen and (max-width: $width) {
-      @content;
+    @content;
   }
 }
 
@@ -11,18 +11,14 @@
   justify-items: center;
   column-gap: 20px;
   row-gap: 40px;
-}
 
-@include max-width(1400px) {
-  .main-container-photo {
-    grid-template-columns: 1fr;
+  .photo-upload-icon {
+    svg {
+      width: 175px;
+      height: 175px;
+    }
   }
 }
-
-
-
-
-
 
 .photo-upload-container {
   min-width: 10%;
@@ -38,7 +34,7 @@
   .photo-upload-icon {
     align-items: center;
     display: flex;
-    margin: 10px 10px 0px 10px;
+    margin: 10px 10px 0 10px;
     padding: 20px;
 
     &:hover {
@@ -54,12 +50,12 @@
     align-items: center;
     min-height: 75px;
     max-width: 200px;
-    padding: 0px 30px;
+    padding: 0 30px;
     text-align: center;
   }
 }
 
-.prediction-container{
+.prediction-container {
   border-radius: 18px;
   border: 8px solid var(--w-color);
   box-shadow: var(--box-shadow);
@@ -67,7 +63,6 @@
   height: fit-content;
   align-items: center;
   justify-items: center;
-  box-shadow: var(--box-shadow);
 }
 
 .prediction-container {
@@ -110,6 +105,32 @@
 
     .custom-slider {
       z-index: var(--slider);
+    }
+  }
+}
+
+@include max-width(1400px) {
+  .main-container-photo {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
+
+    .prediction-container {
+      overflow: hidden;
+      margin: 0 20px 0 20px;
+
+      .map {
+        max-width: 100% !important;
+        height: auto !important;
+      }
+    }
+
+    .photo-upload-icon {
+      svg {
+        width: 60px;
+        height: 60px;
+      }
     }
   }
 }

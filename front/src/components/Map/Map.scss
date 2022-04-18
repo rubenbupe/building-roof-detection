@@ -28,7 +28,7 @@
   justify-items: center;
   position: relative;
 
-  #map{
+  #map {
     border-radius: 10px;
   }
 
@@ -77,9 +77,11 @@
 }
 
 @include max-width(1400px) {
-  .map {
-    width: 300px;
-    height: 300px;
+  .map-container {
+    .map {
+      width: 300px;
+      height: 300px;
+    }
   }
 }
 
@@ -94,12 +96,12 @@
 
 .leaflet-control-zoom-in {
   background-color: var(--w-color);
-  border-radius: 5px 5px 0px 0px !important;
+  border-radius: 5px 5px 0 0 !important;
 }
 
 .leaflet-control-zoom-out {
   background-color: var(--w-color);
-  border-radius: 0px 0px 5px 5px !important;
+  border-radius: 0 0 5px 5px !important;
 }
 
 .leaflet-bottom {
