@@ -11,6 +11,6 @@ export default function Home() {
                 <title>Proyecto Reconocimiento</title>
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
-            <Header/>
+            <Header toggleSwitch={false}/>
         </div>)
 }

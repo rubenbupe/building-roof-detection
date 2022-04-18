@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { navLinks } from "./data";
 import Link from "next/link";
 import { MapOutline, CloudUploadOutline, LogoGithub, CodeSlashOutline } from 'react-ionicons'
+import {toggle} from "ionicons/icons";
 
 const serverTexts = {
   true: 'Servidor', false: 'Cliente', def: 'Error'
@@ -11,7 +12,7 @@ const segmentationTexts = {
   true: 'Instancia', false: 'Semántica', def: 'Error'
 }
 
-export default function Header({ serverSwitch, setServerSwitch, segmentationSwitch, setSegmentationSwitch }) {
+export default function Header({ serverSwitch, setServerSwitch, segmentationSwitch, setSegmentationSwitch, toggleSwitch }) {
   const icons = {
     '/map': MapOutline,
     '/photo': CloudUploadOutline,
@@ -36,6 +37,7 @@ export default function Header({ serverSwitch, setServerSwitch, segmentationSwit
         <a target="_blank" className="header-nav-item text-no-select"><LogoGithub className="header-nav-icon" />GitHub</a>
       </Link>
 
+      {toggleSwitch && (<>
       <div className="header-toggle header-nav-right">
         <label className="switch">
           <input onChange={(e) => {
@@ -55,6 +57,7 @@ export default function Header({ serverSwitch, setServerSwitch, segmentationSwit
         </label>
         <span className="switch-label" id="switch-segmentation">{segmentationTexts[segmentationSwitch] ?? segmentationTexts.def}</span>
       </div>
+      </>)}
     </header>
   );
 }

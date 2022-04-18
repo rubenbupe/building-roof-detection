@@ -3,7 +3,7 @@ import Footer from '../src/components/Footer/Footer';
 
 function Photo() {
   return <div>
-    <Header/>
+    <Header page='api-reference'/>
     <Footer/>
   </div>
 }

@@ -14,7 +14,7 @@ function MapScreen() {
         <div>
             <script src="https://docs.opencv.org/master/opencv.js" type="text/javascript" defer/>
             <Header segmentationSwitch={segmentationSwitch} setSegmentationSwitch={setSegmentationSwitch}
-                    serverSwitch={serverSwitch} setServerSwitch={setServerSwitch}/>
+                    serverSwitch={serverSwitch} setServerSwitch={setServerSwitch} toggleSwitch={true}/>
             <Map segmentationSwitch={segmentationSwitch} serverSwitch={serverSwitch}/>
             <Footer/>
         </div>)
