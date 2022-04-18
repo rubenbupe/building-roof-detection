@@ -4,16 +4,22 @@ import cv2
 import numpy as np
 import base64
 import os
+import time
 
 from helpers import image as image_helper
 from helpers import watershed as watershed_helper
 from helpers import predictions as prediction_helper
+
+from helpers import publisher as publisher_helper
+
 app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins="*", max_http_buffer_size=1e8)#, async_handlers=True, engineio_logger=True)
 
+message_publisher = publisher_helper.Publisher()
 
 @app.route('/predictions/instance', methods=['GET'])
 def prediction_instance():
+    start_time = time.time()
     img = cv2.imdecode(np.fromstring(
         request.files['image'].read(), np.uint8), cv2.IMREAD_COLOR)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -32,15 +38,26 @@ def prediction_instance():
     response = make_response(buffer.tobytes())
     response.headers['Content-Type'] = 'image/jpeg; charset=UTF-8'
 
+    exec_time = (time.time() - start_time) * 1000
+
+    message_publisher.publish_segmentation_metrics(
+        exec_time, 
+        publisher_helper.SEGMENTATION_TYPE.get('instance'), 
+        publisher_helper.SEGMENTATION_API_TYPE.get('api'))
     return response
 
 
 @app.route('/predictions/semantic', methods=['GET'])
 def prediction_semantic():
+    start_time = time.time()
 
     img = cv2.imdecode(np.fromstring(
         request.files['image'].read(), np.uint8), cv2.IMREAD_COLOR)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+    #image_cooler = image_helper.CoolingFilter()
+    #img = image_cooler.render(img)
+
     original_shape = img.shape
 
     prediction = prediction_helper.predict(img)
@@ -50,11 +67,18 @@ def prediction_semantic():
     response = make_response(buffer.tobytes())
     response.headers['Content-Type'] = 'image/jpeg; charset=UTF-8'
 
+    exec_time = (time.time() - start_time) * 1000
+
+    message_publisher.publish_segmentation_metrics(
+        exec_time, 
+        publisher_helper.SEGMENTATION_TYPE.get('semantic'), 
+        publisher_helper.SEGMENTATION_API_TYPE.get('api'))
     return response
 
 
 @socketio.on('image')
 def image(params):
+    start_time = time.time()
     (data_image, watershed) = params
     img = image_helper.base64_to_numpy(data_image)
     original_shape = img.shape
@@ -69,6 +93,13 @@ def image(params):
     else:
         prediction = cv2.resize(prediction,(original_shape[1], original_shape[0])) # Devuelve la imagen al tamaño original
         stringData = image_helper.numpy_to_base64(prediction)
+
+    exec_time = (time.time() - start_time) * 1000
+
+    message_publisher.publish_segmentation_metrics(
+        exec_time, 
+        publisher_helper.SEGMENTATION_TYPE.get('instance' if watershed == True else 'semantic'), 
+        publisher_helper.SEGMENTATION_API_TYPE.get('socket'))
 
     emit('image_response', stringData)
 

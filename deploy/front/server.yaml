@@ -24,9 +24,7 @@ spec:
               value: FRONT
 
             - name: DATABASE_URI
-              value: ENV_DATABASE_URI
-            - name: TURN_DATABASE_URI
-              value: ENV_TURN_DATABASE_URI
+              value: mongodb://reconocimiento:secreto@mongodb-0.mongodb-headless.database:27017/reconocimiento
           resources:
             requests:
               cpu: 100m

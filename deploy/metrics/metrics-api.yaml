@@ -1,36 +1,32 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api
+  name: metrics-api
   labels:
-    app: api
+    app: metrics-api
 spec:
   selector:
     matchLabels:
-      app: api
+      app: metrics-api
   replicas: 1
   template:
     metadata:
       labels:
-        app: api
+        app: metrics-api
     spec:
       containers:
-        - name: api
+        - name: metrics-api
           image: ENV_IMAGE
           ports:
             - containerPort: 3000
           env:
             - name: APP
-              value: API
+              value: METRICS
 
             - name: DATABASE_URI
               value: mongodb://reconocimiento:secreto@mongodb-0.mongodb-headless.database:27017/reconocimiento
             - name: RABBIT_URI
               value: amqp://guest:guest@rabbitmq-0.rabbitmq.default.svc.cluster.local:5672/
-          resources:
-            requests:
-              cpu: 150m
-              memory: 512Mi
       nodeSelector:
         cloud.google.com/gke-nodepool: default-pool
 
@@ -38,41 +34,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: api
+  name: metrics-api
   namespace: default
   labels:
-    app: api
+    app: metrics-api
 spec:
   selector:
-    app: api
+    app: metrics-api
   ports:
     - protocol: TCP
-      port: 30001
+      port: 30003
       targetPort: 3000
   type: NodePort
-
----
-apiVersion: autoscaling/v2beta2
-kind: HorizontalPodAutoscaler
-metadata:
-  name: api
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: api
-  minReplicas: 1
-  maxReplicas: 3
-  metrics:
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          type: Utilization
-          averageUtilization: 85
-    - type: Resource
-      resource:
-        name: memory
-        target:
-          type: AverageValue
-          averageValue: 1500Mi
