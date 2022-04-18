@@ -1,4 +1,4 @@
-import { image } from "@tensorflow/tfjs";
+import {image} from "@tensorflow/tfjs";
 
 export async function predictRequest(model, inputImage, outputCanvas, segmentationSwitch, socket) {
     //make request || store base64 prediction
@@ -12,11 +12,27 @@ export async function predictRequest(model, inputImage, outputCanvas, segmentati
         let i = new Image();
 
         i.onload = async () => {
-          // TODO: fixear imagenes muy grandes (falla con 10k x 10k)
-          let feature_img = new cv.imread(i);
-          cv.imshow('prediction', feature_img);
-      
-          feature_img.delete();
+            // TODO: fixear imagenes muy grandes (falla con 10k x 10k)
+            if (segmentationSwitch) {
+                let prediction = new cv.imread(i);
+
+                cv.imshow(outputCanvas, prediction);
+
+                prediction.delete();
+
+            } else {
+                let feature_img = new cv.imread(inputImage);
+                let prediction = new cv.imread(i);
+                let prediction_gray = new cv.Mat();
+
+                cv.cvtColor(prediction, prediction_gray, cv.COLOR_RGBA2GRAY, 0);
+                cv.imshow(outputCanvas, prediction_gray);
+                cv.imshow('mask-image', feature_img);
+
+                feature_img.delete();
+                prediction.delete();
+                prediction_gray.delete();
+            }
         };
         i.src = res_b64;
     });

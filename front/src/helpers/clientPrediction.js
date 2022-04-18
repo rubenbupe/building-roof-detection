@@ -5,7 +5,6 @@ export const watershed = (feature, tensor, output_canvas, watershed_toggle) => {
     tf.browser.toPixels(tensor, canvas).then(() => {
         canvas.getContext("2d");
 
-        console.log(watershed_toggle);
         if (watershed_toggle) {
             let feature_img = new cv.imread(feature);
             let src = new cv.imread(canvas);

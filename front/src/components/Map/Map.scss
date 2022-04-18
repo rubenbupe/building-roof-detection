@@ -17,13 +17,11 @@
 	}
 }
 
-
-
 .map-container{
 	border-radius: 18px;
 	border: 8px solid var(--w-color);
 	box-shadow: var(--box-shadow);
-	background-color: var(--w-color);
+	background-color: var(--b-color);
 	height: fit-content;
 	width: max-content;
 	align-items: center;
@@ -102,12 +100,9 @@
 	display: none;
 }
 
-
 .map-screenshot-button{
 	height: fit-content;
 	align-self: center;
 	justify-self: center;
 	max-width: 50%;
 }
-
-

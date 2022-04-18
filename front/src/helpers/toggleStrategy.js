@@ -7,7 +7,6 @@ export async function toggleStrategy(model, i, outputCanvas, segmentationSwitch,
             await serverPredictor.predictRequest(model, i, outputCanvas, segmentationSwitch, socket);
             break;
         case false:
-            console.log('que esta pasando', segmentationSwitch);
             clientPredictor.predictImage(model, i, outputCanvas, segmentationSwitch);
             break;
         default:
