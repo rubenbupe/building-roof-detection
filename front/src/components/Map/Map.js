@@ -31,6 +31,7 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
   const [city, setCity] = useState([]);
   const [autocompleteCities, setAutocompleteCities] = useState([]);
   const [autocompleteErr, setAutocompleteErr] = useState([]);
+  let map = null;
 
   const maskImageOpacityRef = useRef();
 
@@ -128,10 +129,10 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
       
       search_helpers.registerSearch(API_URI, lat, lon, query);
 
-      map.setView([lat, lon], 13);
+      map?.setView([lat, lon], 13);
     }
     else {
-      search_helpers.search(API_URI, query, (lat,lon) => {map.setView([lat, lon], 13);});
+      search_helpers.search(API_URI, query, (lat,lon) => {map?.setView([lat, lon], 13);});
     }
   }
 
