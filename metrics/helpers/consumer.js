@@ -99,9 +99,9 @@ function work(msg, cb) {
 		}else if (msg.fields.routingKey == 'search_processing'){
 			const search = new Search({
 				message_datetime: message_content._message_datetime,
-				latitude: message_content.latitude[0],
-				longitude: message_content.longitude[0],
-				query: message_content.query[0],
+				latitude: message_content.latitude,
+				longitude: message_content.longitude,
+				query: message_content.query,
 			});
 
 	

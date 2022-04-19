@@ -42,12 +42,23 @@ class Publisher:
 		if( latitude == None or longitude == None):
 			return
 
+		lat = latitude
+		lon = longitude
+		q = query
+		if isinstance(latitude, list):
+			lat = latitude[0]
+		if isinstance(longitude, list):
+			lon = longitude[0]
+		if isinstance(query, list):
+			q = query[0]
+
+
 		message_datetime = datetime.datetime.now(datetime.timezone.utc).isoformat()
 		message_payload = json.dumps({
 			"_message_datetime":message_datetime,
-			"latitude":latitude,
-			"longitude":longitude,
-			"query":query,
+			"latitude":lat,
+			"longitude":lon,
+			"query":q,
 		})
 
 		self.__setup_connection()
