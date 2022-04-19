@@ -25,7 +25,10 @@ export default function Header({ serverSwitch, setServerSwitch, segmentationSwit
     <header className="header-container">
       <div className="header-logo-container text-no-select">
         <img className="header-logo" src={`${app_logo}`}/>
-        <span className="header-logo-text"><strong>Re</strong>conocimiento</span>
+        <div className="header-logo-text-container">
+          <span className="header-logo-text"><strong>Re</strong>conocimiento</span>
+          <span className="header-logo-subtext">del <strong>Me</strong>dio</span>
+        </div>
       </div>
       {navLinks.map((link, index) => {
         const CurIcon = icons[link.path];

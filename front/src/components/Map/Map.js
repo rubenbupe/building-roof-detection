@@ -191,7 +191,7 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
 
             </>)}
 
-            <canvas ref={maskImageOpacityRef} id='prediction' className="map"/>
+            <canvas ref={maskImageOpacityRef} id='prediction' className="map" style={{mixBlendMode: segmentationSwitch ? 'normal' : 'screen'}}/>
           </div>
         </div>
       </main>
