@@ -173,7 +173,7 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
                   list="places"
                   type="text"
                   id="city"
-                  className="custom-search"
+                  className="custom-button"
                   onChange={handleCityChange}
                 />
               </div>
@@ -183,7 +183,7 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
                 ))}
               </datalist>
               <button
-                className="custom-search-button " onClick={handleClick}
+                className="custom-button" id="search-button" onClick={handleClick}
               ><SearchOutline />
               </button>
             </div>
