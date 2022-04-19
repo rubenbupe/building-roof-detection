@@ -1,5 +1,7 @@
-from flask import Flask, request, make_response
-from flask_socketio import SocketIO, emit  # !pip install flask-socketio
+from flask import Flask, request, make_response, jsonify
+from flask_socketio import SocketIO, emit
+from flask_cors import CORS
+
 import cv2
 import numpy as np
 import base64
@@ -13,9 +15,24 @@ from helpers import predictions as prediction_helper
 from helpers import publisher as publisher_helper
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
+
 socketio = SocketIO(app, cors_allowed_origins="*", max_http_buffer_size=1e8)#, async_handlers=True, engineio_logger=True)
 
 message_publisher = publisher_helper.Publisher()
+
+
+@app.route('/search', methods=['POST'])
+def register_search():
+    latitude = request.json.get('latitude'),
+    longitude = request.json.get('longitude'),
+    query = request.json.get('query'),
+
+    message_publisher.publish_map_search(latitude, longitude, query)
+
+    response = make_response()
+    return response
+
 
 @app.route('/predictions/instance', methods=['GET'])
 def prediction_instance():

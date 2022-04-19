@@ -29,24 +29,43 @@ class Publisher:
 		
 		params = pika.URLParameters(url)
 		self.connection = pika.BlockingConnection(params)
-		self.channel = self.connection.channel() 
-		self.channel.queue_declare(queue='image_processing', durable=True) 
+		self.channel_image = self.connection.channel() 
+		self.channel_search = self.connection.channel() 
+		self.channel_image.queue_declare(queue='image_processing', durable=True) 
+		self.channel_search.queue_declare(queue='search_processing', durable=True) 
 
 
 	def __serialize_message(self, **kwargs) -> dict:
 		return json.dumps(kwargs)
 
+	def publish_map_search(self, latitude, longitude, query) -> None:
+		if( latitude == None or longitude == None):
+			return
+
+		message_datetime = datetime.datetime.now(datetime.timezone.utc).isoformat()
+		message_payload = json.dumps({
+			"_message_datetime":message_datetime,
+			"latitude":latitude,
+			"longitude":longitude,
+			"query":query,
+		})
+
+		self.__setup_connection()
+		self.channel_search.basic_publish(exchange='',
+                      routing_key='search_processing',
+                      body=message_payload)
+
 
 	def publish_segmentation_metrics(self, exec_time, segmentation_type, api_type) -> None:
 		message_datetime = datetime.datetime.now(datetime.timezone.utc).isoformat()
-		message_payload = self.__serialize_message(
-			_message_datetime=message_datetime,
-			execution_time=exec_time,
-			api_type=api_type,
-			segmentation_type=segmentation_type,
-		)
+		message_payload = json.dumps({
+			"_message_datetime": message_datetime,
+			"execution_time": exec_time,
+			"api_type": api_type,
+			"segmentation_type": segmentation_type,
+		})
 		self.__setup_connection()
-		self.channel.basic_publish(exchange='',
+		self.channel_image.basic_publish(exchange='',
                       routing_key='image_processing',
                       body=message_payload)
 
