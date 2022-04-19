@@ -30,6 +30,7 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
   const [city, setCity] = useState([]);
   const [autocompleteCities, setAutocompleteCities] = useState([]);
   const [autocompleteErr, setAutocompleteErr] = useState([]);
+  let map = null;
 
   const maskImageOpacityRef = useRef();
 

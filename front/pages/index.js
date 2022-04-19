@@ -1,8 +1,3 @@
-import Head from 'next/head'
-import Header from '../src/components/Header/Header';
-import PhotoUpload from '../src/components/PhotoUpload/PhotoUpload';
-import Map from '../src/components/Map/Map';
-
 export default function Home() {
     return null
 }
