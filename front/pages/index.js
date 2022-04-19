@@ -10,7 +10,7 @@ export default function Home() {
 export const getServerSideProps = async (context) => {
     return {
         redirect: {
-            destination: '/about', permanent: false
+            destination: '/map', permanent: false
         }
     }
 }
