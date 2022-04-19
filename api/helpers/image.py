@@ -4,6 +4,7 @@ import io
 from PIL import Image
 import numpy as np
 from scipy.interpolate import UnivariateSpline
+import base64
 
 def numpy_to_base64(img):
     imgencode = cv2.imencode('.jpg', img)[1]
@@ -14,10 +15,15 @@ def numpy_to_base64(img):
     return stringData
 
 def base64_to_numpy(data_image):
-    b = io.BytesIO(base64.b64decode(data_image))
-    img = Image.open(b)
+    #b = io.BytesIO(base64.b64decode(data_image))
+    #img = Image.open(b)
+    data_decoded = base64.b64decode(data_image)
+    nparr = np.fromstring(data_decoded, np.uint8)
+    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    return img
+
     
-    return np.array(img)
+    #return np.array(img)
 
 
 # Cooling effect
