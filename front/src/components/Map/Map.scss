@@ -1,182 +1,175 @@
 @mixin max-width($width) {
-	@media screen and (max-width: $width) {
-		@content;
-	}
+  @media screen and (max-width: $width) {
+    @content;
+  }
 }
 
 .main-container-map {
-	display: grid;
-	grid-template-columns: 5fr 2fr 5fr;
-	column-gap: 20px;
-	row-gap: 40px;
-	align-items: flex-end;
+  display: grid;
+  grid-template-columns: 5fr 2fr 5fr;
+  column-gap: 20px;
+  row-gap: 40px;
+  align-items: flex-end;
 
-	.map-screenshot-button,
-	.spinner-container {
-		height: fit-content;
-		align-self: center;
-		justify-self: center;
-		max-width: 50%;
-	}
+  .map-screenshot-button,
+  .spinner-container {
+    align-self: center;
+    justify-self: center;
+    width: 135px;
+    height: 110px;
+    margin: 0;
+  }
 
-	.map {
-		width: 600px;
-		height: 600px;
-		border-radius: 10px;
-		overflow: hidden;
-		z-index: var(--map-container);
-		display: block;
-		background-color: var(--b-color);
-	}
+  .map-container {
+    border-radius: 18px;
+    border: 8px solid var(--w-color);
+    box-shadow: var(--box-shadow);
+    background-color: var(--w-color);
+    height: fit-content;
+    width: max-content;
+    align-items: center;
+    justify-items: center;
+    position: relative;
+
+    .map {
+      width: 600px;
+      height: 600px;
+      border-radius: 10px;
+      overflow: hidden;
+      z-index: var(--map-container);
+      display: block;
+      background-color: var(--b-color);
+    }
+
+    #prediction {
+      opacity: 1;
+      mix-blend-mode: screen;
+      position: relative;
+      z-index: var(--map-mask);
+      cursor: not-allowed;
+    }
+
+    #mask-image {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      right: 0;
+    }
+
+    .map-slider-container {
+      background-color: var(--w-color);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-bottom: 5px;
+      border-radius: 0 0 8px 8px;
+      margin: 0 10px;
+
+      .custom-slider {
+        z-index: var(--slider);
+      }
+    }
+  }
+
+  .places-autocomplete {
+    display: flex;
+    flex-direction: row;
+    align-self: flex-start;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+    margin: 15px 10px;
+
+    .custom-search-container {
+      display: flex;
+      flex: 1;
+
+      .custom-button {
+        padding: 5px 5px;
+        flex: 1;
+        height: 2.5rem;
+
+        &:hover {
+          mix-blend-mode: normal;
+          color: white;
+          background-color: transparent;
+        }
+
+        &:hover::-webkit-input-placeholder {
+          color: white;
+        }
+      }
+    }
+
+    #search-button {
+      border-radius: 50%;
+      margin-left: 10px;
+      margin-right: 10px;
+      height: 2.5rem;
+      width: 2.5rem;
+      padding: 0;
+
+      &:hover {
+        mix-blend-mode: normal;
+        color: white;
+        background-color: transparent;
+
+        svg {
+          filter: invert(100%);
+        }
+      }
+    }
+  }
 }
 
-@include max-width(1400px) {
-	.main-container-map {
-		grid-template-columns: 1fr;
-	}
+@include max-width(1600px) {
+  .main-container-map {
+    grid-template-columns: 1fr;
+
+    .map-container {
+      .map, #mask-image, #prediction {
+        width: 500px;
+        height: 500px;
+      }
+    }
+  }
 }
 
-.map-container {
-	border-radius: 18px;
-	border: 8px solid var(--w-color);
-	box-shadow: var(--box-shadow);
-	background-color: var(--w-color);
-	height: fit-content;
-	width: max-content;
-	align-items: center;
-	justify-items: center;
-	position: relative;
+@include max-width(1000px) {
+  .main-container-map {
+    grid-template-columns: 1fr;
 
-	#map {
-		border-radius: 10px;
-	}
-
-	#prediction {
-		opacity: 1;
-		mix-blend-mode: screen;
-		position: relative;
-		z-index: var(--map-mask);
-		border-radius: 10px;
-		cursor: not-allowed;
-	}
-
-	#mask-image {
-		position: absolute;
-		left: 0;
-		bottom: 0;
-		right: 0;
-		width: 600px;
-		height: 600px;
-		border-radius: 10px;
-	}
-
-	.map-slider-container {
-		background-color: var(--w-color);
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding-bottom: 5px;
-		border-radius: 0 0 8px 8px;
-		margin: 0px 10px;
-
-		.custom-slider {
-			z-index: var(--slider);
-		}
-	}
-}
-
-@include max-width(1400px) {
-	.map-container {
-		.map, #mask-image, #prediction {
-			width: 300px;
-			height: 300px;
-		}
-	}
+    .map-container {
+      .map, #mask-image, #prediction {
+        width: 300px;
+        height: 300px;
+      }
+    }
+  }
 }
 
 .leaflet-pane,
 .leaflet-bottom,
 .leaflet-tile-container {
-	z-index: var(--map);
+  z-index: var(--map);
 }
 
 .leaflet-control-zoom {
-	border: none;
-	opacity: 0.9;
+  border: none;
+  opacity: 0.9;
 }
 
 .leaflet-control-zoom-in {
-	background-color: var(--w-color);
-	border-radius: 5px 5px 0 0 !important;
+  background-color: var(--w-color);
+  border-radius: 5px 5px 0 0 !important;
 }
 
 .leaflet-control-zoom-out {
-	background-color: var(--w-color);
-	border-radius: 0 0 5px 5px !important;
+  background-color: var(--w-color);
+  border-radius: 0 0 5px 5px !important;
 }
 
 .leaflet-bottom {
-	display: none;
-}
-
-.places-autocomplete {
-	display: flex;
-	flex-direction: row;
-	align-self: flex-start;
-	height: auto;
-	align-items: center;
-	justify-content: center;
-	margin: 15px 10px;
-}
-
-.custom-search-button {
-	text-align: center;
-	text-decoration: none;
-	transition-duration: 0.3s;
-	cursor: pointer;
-	border-radius: 50%;
-	border: 2px solid white;
-	font-weight: 700;
-	mix-blend-mode: screen;
-	color: black;
-	background-color: white;
-	margin-left: 10px;
-	margin-right: 10px;
-	height: 2.5rem;
-	width: 2.5rem;
-
-	&:hover {
-		mix-blend-mode: normal;
-		color: white;
-		background-color: transparent;
-	}
-}
-
-.custom-search-container {
-	display: flex;
-	flex: 1;
-}
-
-.custom-search {
-	padding: 5px 5px;
-	text-align: center;
-	text-decoration: none;
-	transition-duration: 0.3s;
-	cursor: pointer;
-	border-radius: 10px;
-	border: 2px solid white;
-	font-weight: 700;
-	mix-blend-mode: screen;
-	color: black;
-	background-color: white;
-
-	flex: 1;
-	height: 2.5rem;
-
-	&:hover {
-		mix-blend-mode: normal;
-		color: white;
-		background-color: transparent;
-	}
+  display: none;
 }
