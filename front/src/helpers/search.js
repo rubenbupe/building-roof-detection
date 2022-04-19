@@ -1,6 +1,6 @@
 export const registerSearch = (base_uri, latitude, longitude, query) => {
 
-	fetch(base_uri + 'search/',
+	fetch(base_uri + 'search',
 		{
 			headers: {
 				'Accept': 'application/json',

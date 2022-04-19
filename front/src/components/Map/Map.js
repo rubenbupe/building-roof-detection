@@ -31,7 +31,7 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
   const [city, setCity] = useState([]);
   const [autocompleteCities, setAutocompleteCities] = useState([]);
   const [autocompleteErr, setAutocompleteErr] = useState([]);
-  let map = null;
+  const [map, setMap] = useState(null);
 
   const maskImageOpacityRef = useRef();
 
@@ -76,13 +76,14 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
 
 
 
-    map = L.map("map").setView([40.419215, -3.693358], 13);
+    const c_map = L.map("map").setView([40.419215, -3.693358], 13);
+    setMap(c_map);
 
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
       maxZoom: 19,
       minZoom: 17,
       subdomains: []
-    }).addTo(map);
+    }).addTo(c_map);
 
     const cur_screenshoter = new SimpleMapScreenshoter({ hidden: true });
     setScreenshotter(cur_screenshoter);
@@ -96,7 +97,7 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
     http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}   ->    ['mt0', 'mt1', 'mt2', 'mt3']
     */
 
-    cur_screenshoter.addTo(map);
+    cur_screenshoter.addTo(c_map);
 
     load_model().then(model => {
       setModel(model);
