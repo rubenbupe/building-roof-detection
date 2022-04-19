@@ -3,6 +3,7 @@
 const amqp = require('amqplib/callback_api');
 
 const { Prediction } = require('../../common/models/Prediction');
+const { Search } = require('../../common/models/Search');
 
 // if the connection is closed or fails to be established at all, we will reconnect
 var amqpConn = null;
@@ -49,7 +50,13 @@ function startWorker() {
 		ch.assertQueue("image_processing", { durable: true }, function (err, _ok) {
 			if (closeOnErr(err)) return;
 			ch.consume("image_processing", processMsg, { noAck: false });
-			console.log("Worker is started");
+			console.log("Worker is started for image_processing");
+		});
+
+		ch.assertQueue("search_processing", { durable: true }, function (err, _ok) {
+			if (closeOnErr(err)) return;
+			ch.consume("search_processing", processMsg, { noAck: false });
+			console.log("Worker is started for search_processing");
 		});
 
 		function processMsg(msg) {
@@ -89,6 +96,22 @@ function work(msg, cb) {
 				console.error('Error saving prediction');
 				cb(false);
 			})
+		}else if (msg.fields.routingKey == 'search_processing'){
+			const search = new Search({
+				message_datetime: message_content._message_datetime,
+				latitude: message_content.latitude[0],
+				longitude: message_content.longitude[0],
+				query: message_content.query[0],
+			});
+
+	
+			search.save().then(() => {
+				console.log('Saved search');
+				cb(true);
+			}).catch((err) => {
+				console.error('Error saving search', err);
+				cb(false);
+			});
 		}
 	} catch {
 		cb(false);

@@ -7,6 +7,7 @@ import React, { useEffect, useState, useRef } from "react";
 //import { SimpleMapScreenshoter } from "leaflet-simple-map-screenshoter";
 import * as tf from '@tensorflow/tfjs';
 import * as toggleStrategy from '../../helpers/toggleStrategy.js';
+import * as search_helpers from '../../helpers/search';
 import { map } from "leaflet";
 import { fetchPlace } from './fetchPlace';
 import { SearchOutline } from 'react-ionicons'
@@ -30,7 +31,6 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
   const [city, setCity] = useState([]);
   const [autocompleteCities, setAutocompleteCities] = useState([]);
   const [autocompleteErr, setAutocompleteErr] = useState([]);
-  let map = null;
 
   const maskImageOpacityRef = useRef();
 
@@ -128,7 +128,8 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
 
       const lat = coords[0];
       const lon = coords[1];
-
+      
+      search_helpers.registerSearch(API_URI, lat, lon, query);
 
       map.setView([lat, lon], 13);
     }
@@ -140,9 +141,12 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
           const lat = data.data[0].latitude;
           const lon = data.data[0].longitude;
 
+          search_helpers.registerSearch(API_URI, lat, lon, query);
 
           map.setView([lat, lon], 13);
 
+        }).catch(err => {
+          console.error('No matching address');
         });
 
     }
