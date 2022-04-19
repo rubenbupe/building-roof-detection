@@ -34,9 +34,6 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
 
   const maskImageOpacityRef = useRef();
 
-
-  const access_key = '3f7755a8072884f2e602f8b9086e2038';
-
   const onButtonClick = () => {
     setIsLoading(true);
     screenshotter?.takeScreen('image', {})
@@ -134,21 +131,7 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
       map.setView([lat, lon], 13);
     }
     else {
-      fetch('http://api.positionstack.com/v1/forward?access_key=' + access_key + '&query=' + query)
-        .then(response => response.json())
-        .then(data => {
-
-          const lat = data.data[0].latitude;
-          const lon = data.data[0].longitude;
-
-          search_helpers.registerSearch(API_URI, lat, lon, query);
-
-          map.setView([lat, lon], 13);
-
-        }).catch(err => {
-          console.error('No matching address');
-        });
-
+      search_helpers.search(API_URI, query, (lat,lon) => {map.setView([lat, lon], 13);});
     }
   }
 

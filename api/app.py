@@ -7,6 +7,7 @@ import numpy as np
 import base64
 import os
 import time
+import requests
 
 from helpers import image as image_helper
 from helpers import watershed as watershed_helper
@@ -20,6 +21,22 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 socketio = SocketIO(app, cors_allowed_origins="*", max_http_buffer_size=1e8)#, async_handlers=True, engineio_logger=True)
 
 message_publisher = publisher_helper.Publisher()
+
+
+@app.route('/search', methods=['GET'])
+def search():
+    query = request.args.get('query')
+    res = requests.get('http://api.positionstack.com/v1/forward', params=[('access_key', '3f7755a8072884f2e602f8b9086e2038'), ('query', query)])
+    res = res.json()
+
+    lat, lon = None, None
+
+    if(len(res.get('data', [])) > 0):
+        lat = res.get('data')[0].get('latitude')
+        lon = res.get('data')[0].get('longitude')
+        message_publisher.publish_map_search(lat, lon, query)
+
+    return make_response(jsonify({'latitude': lat, 'longitude': lon}), 200)
 
 
 @app.route('/search', methods=['POST'])
