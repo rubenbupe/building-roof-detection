@@ -77,6 +77,19 @@
   .map{
     height: 600px;
     width: 600px;
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: var(--map-container);
+    display: block;
+    background-color: var(--b-color);
+  }
+
+  #prediction {
+    opacity: 1;
+    mix-blend-mode: screen;
+    position: relative;
+    z-index: var(--map-mask);
+    cursor: not-allowed;
   }
 
   #mask-image {
@@ -84,17 +97,6 @@
     left: 0;
     bottom: 0;
     right: 0;
-    width: 600px;
-    height: 600px;
-    border-radius: 10px;
-  }
-
-  #prediction {
-    opacity: 1;
-    border-radius: 10px;
-    mix-blend-mode: screen;
-    position: relative;
-    z-index: var(--map-mask);
   }
 
   .photo-slider-container {
