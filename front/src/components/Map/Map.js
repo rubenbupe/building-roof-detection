@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Spinner from "../Spinner/Spinner";
 import Script from "next/script";
 import dynamic from 'next/dynamic'
 import React, { useEffect, useState, useRef } from "react";
@@ -25,15 +26,18 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
   const [screenshotter, setScreenshotter] = useState(null);
   const [socket, setSocket] = useState(null);
   const [model, setModel] = useState(null);
-  const maskImageOpacityRef = useRef();
+  const [isLoading, setIsLoading] = useState(false);
   const [city, setCity] = useState([]);
   const [autocompleteCities, setAutocompleteCities] = useState([]);
   const [autocompleteErr, setAutocompleteErr] = useState([]);
+
+  const maskImageOpacityRef = useRef();
 
 
   const access_key = '3f7755a8072884f2e602f8b9086e2038';
 
   const onButtonClick = () => {
+    setIsLoading(true);
     screenshotter?.takeScreen('image', {})
       .then(image => {
         if (model == null) { return; }
@@ -41,11 +45,12 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
         let i = new Image();
 
         i.onload = async function () {
-          await toggleStrategy.toggleStrategy(model, i, 'prediction', segmentationSwitch, serverSwitch, socket);
+          await toggleStrategy.toggleStrategy(model, i, 'prediction', segmentationSwitch, serverSwitch, socket, setIsLoading);
         };
         i.src = image;
       }).catch(e => {
-        console.error(e.toString())
+        console.error(e.toString());
+        setIsLoading(false);
       })
   };
 
@@ -159,10 +164,11 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
             <div className="places-autocomplete">
               <div className="shadow-container custom-search-container">
                 <input
+                  placeholder="Escribe aquí para buscar"
                   list="places"
                   type="text"
                   id="city"
-                  className="custom-search "
+                  className="custom-search"
                   onChange={handleCityChange}
                 />
               </div>
@@ -177,25 +183,27 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
               </button>
             </div>
             <div className="map-container">
-              <div className="map" id="map" style={{ width: "600px", height: "600px" }} />
+              <div className="map" id="map" />
             </div>
           </div>
 
-          <span className="map-screenshot-button custom-button" id="button" onClick={onButtonClick}>Procesar imagen →</span>
+          {isLoading ? <Spinner className="map-spinner" /> :
+            <span className="map-screenshot-button custom-button" id="button" onClick={onButtonClick}>Procesar imagen →</span>}
           <div className="map-container">
-            <canvas ref={maskImageOpacityRef} id='prediction' className="map"
-              style={{ width: "600px", height: "600px" }} />
+
 
             {segmentationSwitch === false && (<>
-              <canvas id='mask-image' className="map" />
-
               <div className="map-slider-container">
                 <input type="range" min="0" max="1" className="custom-slider" step="0.1"
                   onInput={(e) => {
                     maskImageOpacityRef && (maskImageOpacityRef.current.style.opacity = e.target.value);
                   }} />
               </div>
+              <canvas id='mask-image' className="map" />
+
             </>)}
+
+            <canvas ref={maskImageOpacityRef} id='prediction' className="map"/>
           </div>
         </div>
       </main>

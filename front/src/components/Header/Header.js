@@ -4,12 +4,14 @@ import Link from "next/link";
 import { MapOutline, CloudUploadOutline, LogoGithub, CodeSlashOutline } from 'react-ionicons'
 import {toggle} from "ionicons/icons";
 
+const app_logo = 'images/logos/logo.png';
+
 const serverTexts = {
-  true: 'Servidor', false: 'Cliente', def: 'Error'
+  true: 'Servidor', false: 'Cliente', def: 'Error',
 }
 
 const segmentationTexts = {
-  true: 'Instancia', false: 'Semántica', def: 'Error'
+  true: 'Instancia', false: 'Semántica', def: 'Error',
 }
 
 export default function Header({ serverSwitch, setServerSwitch, segmentationSwitch, setSegmentationSwitch, toggleSwitch }) {
@@ -22,7 +24,8 @@ export default function Header({ serverSwitch, setServerSwitch, segmentationSwit
   return (
     <header className="header-container">
       <div className="header-logo-container text-no-select">
-        <span className="header-logo">Reconocimiento</span>
+        <img className="header-logo" src={`${app_logo}`}/>
+        <span className="header-logo-text"><strong>Re</strong>conocimiento</span>
       </div>
       {navLinks.map((link, index) => {
         const CurIcon = icons[link.path];

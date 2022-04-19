@@ -1,28 +1,23 @@
 @mixin max-width($width) {
   @media screen and (max-width: $width) {
-      @content;
+    @content;
   }
 }
 
 .main-container-photo {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-items: center;
-  column-gap: 20px;
-  row-gap: 40px;
-}
+  justify-content: space-evenly;
+  width: 100%;
 
-@include max-width(1400px) {
-  .main-container-photo {
-    grid-template-columns: 1fr;
+  .photo-upload-icon {
+    svg {
+      width: 175px;
+      height: 175px;
+    }
   }
 }
-
-
-
-
-
 
 .photo-upload-container {
   min-width: 10%;
@@ -38,7 +33,7 @@
   .photo-upload-icon {
     align-items: center;
     display: flex;
-    margin: 10px 10px 0px 10px;
+    margin: 10px 10px 0 10px;
     padding: 20px;
 
     &:hover {
@@ -54,12 +49,12 @@
     align-items: center;
     min-height: 75px;
     max-width: 200px;
-    padding: 0px 30px;
+    padding: 0 30px;
     text-align: center;
   }
 }
 
-.prediction-container{
+.prediction-container {
   border-radius: 18px;
   border: 8px solid var(--w-color);
   box-shadow: var(--box-shadow);
@@ -67,7 +62,6 @@
   height: fit-content;
   align-items: center;
   justify-items: center;
-  box-shadow: var(--box-shadow);
 }
 
 .prediction-container {
@@ -80,18 +74,24 @@
   justify-items: center;
   box-shadow: var(--box-shadow);
 
+  .map{
+    height: 600px;
+    width: 600px;
+  }
+
   #mask-image {
     position: absolute;
     left: 0;
-    top: 0;
     bottom: 0;
     right: 0;
     width: 600px;
     height: 600px;
+    border-radius: 10px;
   }
 
   #prediction {
     opacity: 1;
+    border-radius: 10px;
     mix-blend-mode: screen;
     position: relative;
     z-index: var(--map-mask);
@@ -103,11 +103,34 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-top: 5px;
-    border-radius: 0 0 8px 8px;
+    padding-bottom: 5px;
+    border-radius: 8px 8px 0 0 ;
 
     .custom-slider {
       z-index: var(--slider);
+    }
+  }
+}
+
+@include max-width(1550px) {
+  .main-container-photo {
+    flex-direction: column-reverse;
+
+    .prediction-container {
+      overflow: hidden;
+      margin: 0 20px 40px 20px;
+
+      .map {
+        max-width: 100% !important;
+        height: auto !important;
+      }
+    }
+
+    .photo-upload-icon {
+      svg {
+        width: 60px;
+        height: 60px;
+      }
     }
   }
 }

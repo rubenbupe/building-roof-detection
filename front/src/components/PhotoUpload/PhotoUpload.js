@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Spinner from "../Spinner/Spinner";
 import dynamic from 'next/dynamic'
 import React, { useEffect, useState, useRef } from "react";
 import Header from '../Header/Header';
@@ -19,9 +20,13 @@ async function load_model() {
 export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
   const [model, setModel] = useState(null);
   const [socket, setSocket] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [photoUploaded, setPhotoUploaded] = useState(false);
   const maskImageOpacityRef = useRef();
 
   const uploadToClient = (event) => {
+      setIsLoading(true);
+      setPhotoUploaded(true);
     if (event.target.files && event.target.files[0]) {
       const image_blob = event.target.files[0];
 
@@ -30,7 +35,7 @@ export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
 
         i.onload = async () => {
           // TODO: fixear imagenes muy grandes (falla con 10k x 10k)
-          await toggleStrategy.toggleStrategy(model, i, 'prediction', segmentationSwitch, serverSwitch, socket);
+          await toggleStrategy.toggleStrategy(model, i, 'prediction', segmentationSwitch, serverSwitch, socket, setIsLoading);
         };
         i.src = image_b64;
       })
@@ -55,7 +60,7 @@ export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
     mysocket.on("disconnect", (razón) => {
       console.log('Se ha cortado la conexión con el servidor', razón);
     });
-    
+
     setSocket(mysocket);
 
     load_model().then(model => {
@@ -72,6 +77,7 @@ export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
         </Head>
         <main>
             <div className='main-container-photo'>
+                {isLoading ? <Spinner /> :
                 <div className='shadow-container'>
                     <div className='photo-upload-container'>
                         <CloudUploadOutline height={'175px'} width={'175px'} className='photo-upload-icon'
@@ -81,19 +87,23 @@ export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
                                onChange={uploadToClient}/>
                     </div>
                 </div>
+                }
+                {photoUploaded ?
                 <div className='prediction-container'>
-                    <canvas ref={maskImageOpacityRef} id='prediction' className='map'/>
                     {segmentationSwitch === false && (<>
-                        <canvas id='mask-image' className='map'/>
-
-                        <div className='photo-slider-container'>
+                      <div className='photo-slider-container'>
                             <input type='range' min='0' max='1' className='custom-slider' step='0.1'
                                    onInput={(e) => {
                                        maskImageOpacityRef && (maskImageOpacityRef.current.style.opacity = e.target.value);
                                    }}/>
                         </div>
+                        <canvas id='mask-image' className='map'/>
                     </>)}
+
+                    <canvas ref={maskImageOpacityRef} id='prediction' className='map'/>
+
                 </div>
+                : <></>}
             </div>
         </main>
     </div>)

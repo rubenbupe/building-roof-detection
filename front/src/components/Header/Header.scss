@@ -23,12 +23,15 @@
 	justify-content: space-around;
 	cursor: default;
 	margin: 0px 20px;
+	align-items: center;
 }
 
-.header-logo{
-	font-weight: 700;
+.header-logo-text{
 	font-size: 1.4em;
-	letter-spacing: 0.07em;
+}
+
+.header-logo {
+	height: 2.4rem;
 }
 
 .header-nav-container {
