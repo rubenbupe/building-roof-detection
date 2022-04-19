@@ -21,7 +21,7 @@ async function load_model() {
 }
 
 
-export default function Map({serverSwitch, segmentationSwitch}) {
+export default function Map({ serverSwitch, segmentationSwitch }) {
   const [screenshotter, setScreenshotter] = useState(null);
   const [socket, setSocket] = useState(null);
   const [model, setModel] = useState(null);
@@ -30,8 +30,8 @@ export default function Map({serverSwitch, segmentationSwitch}) {
   const [autocompleteCities, setAutocompleteCities] = useState([]);
   const [autocompleteErr, setAutocompleteErr] = useState([]);
 
-  
-  const access_key= '3f7755a8072884f2e602f8b9086e2038';
+
+  const access_key = '3f7755a8072884f2e602f8b9086e2038';
 
   const onButtonClick = () => {
     screenshotter?.takeScreen('image', {})
@@ -54,24 +54,24 @@ export default function Map({serverSwitch, segmentationSwitch}) {
     tf.setBackend('webgl');
     const { io } = await import("socket.io-client");
     const L = await import('leaflet');
-    const {SimpleMapScreenshoter} = await import('leaflet-simple-map-screenshoter');
+    const { SimpleMapScreenshoter } = await import('leaflet-simple-map-screenshoter');
 
 
 
-      const mysocket = io(API_URI);
+    const mysocket = io(API_URI);
 
-    mysocket.on('connect', function () {
+    mysocket.on('connect', function () {
       console.log('Se ha extablecido la conexión con el servidor');
     })
 
     mysocket.on("disconnect", (razón) => {
       console.log('Se ha cortado la conexión con el servidor', razón);
     });
-    
+
     setSocket(mysocket);
 
-    
-    
+
+
     map = L.map("map").setView([40.419215, -3.693358], 13);
 
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
@@ -113,92 +113,91 @@ export default function Map({serverSwitch, segmentationSwitch}) {
     res.error ? setAutocompleteErr(res.error) : setAutocompleteErr("");
   };
 
-  const handleClick = () =>{
+  const handleClick = () => {
 
-  const query= document.getElementById("city").value;
-  var hasNumber = /\d/;
-  if (hasNumber.test(query)){
-    const coords = query.split(",");
-    
-    const lat =coords[0];
-    const lon = coords[1];
+    const query = document.getElementById("city").value;
+    var hasNumber = /\d/;
+    if (hasNumber.test(query)) {
+      const coords = query.split(",");
 
-    
-    map.setView([lat, lon], 13);
-  }
-  else{
-  fetch('http://api.positionstack.com/v1/forward?access_key='+ access_key + '&query='+ query)
-  .then(response => response.json())
-  .then(data => {
+      const lat = coords[0];
+      const lon = coords[1];
 
-      const lat =data.data[0].latitude;
-      const lon = data.data[0].longitude;
 
-      
       map.setView([lat, lon], 13);
+    }
+    else {
+      fetch('http://api.positionstack.com/v1/forward?access_key=' + access_key + '&query=' + query)
+        .then(response => response.json())
+        .then(data => {
 
-     });
-    
+          const lat = data.data[0].latitude;
+          const lon = data.data[0].longitude;
+
+
+          map.setView([lat, lon], 13);
+
+        });
+
     }
   }
 
   return (
     <div>
-        <Head>
-            <link
-                rel="stylesheet"
-                href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
-                integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-                crossOrigin=""
-            />
-            <title>Proyecto Reconocimiento</title>
-        </Head>
-        <main>
-
-     
-      <div className="places-autocomplete">
-        <div className="places-autocomplete__inputWrap">
-          <input
-            list="places"
-            type="text"
-            id="city"
-            className="custom-search "
-            onChange={handleCityChange}
-          />
-          <datalist  id="places">
-            {autocompleteCities.map((city, i) => (
-              <option key={i}>{city}</option>
-            ))}
-          </datalist>
-          <button
-            className="custom-search-button " onClick={handleClick}   height="30px"  width="30px"
-          ><SearchOutline/>
-        </button>
-        </div>
-
-
-          </div>
-            <div className="main-container-map">
-                <div className="map-container">
-                    <div className="map" id="map" style={{width: "600px", height: "600px"}}/>
-                </div>
-                <span className="map-screenshot-button custom-button" id="button" onClick={onButtonClick}>Procesar imagen →</span>
-                <div className="map-container">
-                    <canvas ref={maskImageOpacityRef} id='prediction' className="map"
-                            style={{width: "600px", height: "600px"}}/>
-
-                    {segmentationSwitch === false && (<>
-                        <canvas id='mask-image' className="map"/>
-
-                        <div className="map-slider-container">
-                            <input type="range" min="0" max="1" className="custom-slider" step="0.1"
-                                   onInput={(e) => {
-                                       maskImageOpacityRef && (maskImageOpacityRef.current.style.opacity = e.target.value);
-                                   }}/>
-                        </div>
-                    </>)}
-                </div>
+      <Head>
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+          crossOrigin=""
+        />
+        <title>Proyecto Reconocimiento</title>
+      </Head>
+      <main>
+        <div className="main-container-map">
+          <div>
+            <div className="places-autocomplete">
+              <div className="shadow-container custom-search-container">
+                <input
+                  list="places"
+                  type="text"
+                  id="city"
+                  className="custom-search "
+                  onChange={handleCityChange}
+                />
+              </div>
+              <datalist id="places">
+                {autocompleteCities.map((city, i) => (
+                  <option key={i}>{city}</option>
+                ))}
+              </datalist>
+              <button
+                className="custom-search-button " onClick={handleClick}
+              ><SearchOutline />
+              </button>
             </div>
-        </main>
+            <div className="map-container">
+              <div className="map" id="map" style={{ width: "600px", height: "600px" }} />
+            </div>
+          </div>
+
+          <span className="map-screenshot-button custom-button" id="button" onClick={onButtonClick}>Procesar imagen →</span>
+          <div className="map-container">
+            <canvas ref={maskImageOpacityRef} id='prediction' className="map"
+              style={{ width: "600px", height: "600px" }} />
+
+            {segmentationSwitch === false && (<>
+              <canvas id='mask-image' className="map" />
+
+              <div className="map-slider-container">
+                <input type="range" min="0" max="1" className="custom-slider" step="0.1"
+                  onInput={(e) => {
+                    maskImageOpacityRef && (maskImageOpacityRef.current.style.opacity = e.target.value);
+                  }} />
+              </div>
+            </>)}
+          </div>
+        </div>
+      </main>
     </div>);
-  }
+}
