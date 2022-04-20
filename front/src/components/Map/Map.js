@@ -26,6 +26,8 @@ async function load_model() {
 export default function Map({ serverSwitch, segmentationSwitch }) {
   const [screenshotter, setScreenshotter] = useState(null);
   const [socket, setSocket] = useState(null);
+  const [currentLatitude, setLat] = useState(40.419215);
+  const [currentLongitude, setLon] = useState(-3.693358);
   const [model, setModel] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [city, setCity] = useState([]);
@@ -34,6 +36,10 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
   const [map, setMap] = useState(null);
 
   const maskImageOpacityRef = useRef();
+
+  useEffect(()=>{
+    map?.setView([currentLatitude,currentLongitude ], 13);
+  },[currentLatitude,currentLongitude])
 
   const onButtonClick = () => {
     setIsLoading(true);
@@ -75,8 +81,20 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
     setSocket(mysocket);
 
 
+    if("geolocation" in navigator){
+      navigator.geolocation.getCurrentPosition((currentLocation)=>{
+        console.log(currentLocation)
+        setLat(currentLocation.coords.latitude)
+        setLon(currentLocation.coords.longitude)
 
-    const c_map = L.map("map").setView([40.419215, -3.693358], 13);
+      }, ()=>{
+        console.error("ubicacion no encontrada")
+      }, {maximumAge:60000, timeout:5000, enableHighAccuracy:true});
+
+    }
+
+
+    const c_map = L.map("map").setView([currentLatitude,currentLongitude ], 13);
     setMap(c_map);
 
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
@@ -119,17 +137,16 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
   };
 
   const handleClick = () => {
+    const query= document.getElementById("city").value;
+    console.log(query)
 
-    const query = document.getElementById("city").value;
-    var hasNumber = /\d/;
-    if (hasNumber.test(query)) {
-      const coords = query.split(",");
+    const regex = /^[\s]*([-]?[\d]+[[\.]\d+]?)\s*\,\s*(-?\d+[[\.][\d]+]?)/mi;
 
-      const lat = coords[0];
-      const lon = coords[1];
-      
-      search_helpers.registerSearch(API_URI, lat, lon, query);
-
+  let coords;
+  if ((coords = regex.exec(query)) !== null) {
+   
+      const lat =coords[1];
+      const lon = coords[2];
       map?.setView([lat, lon], 13);
     }
     else {
