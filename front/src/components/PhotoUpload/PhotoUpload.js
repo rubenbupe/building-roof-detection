@@ -74,7 +74,7 @@ export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
     <div className='container'>
         <Head>
             <title>Proyecto Reconocimiento</title>
-            <link rel='icon' href='/favicon.ico'/>
+            <link rel='icon' href={'/favicon.ico'}/>
         </Head>
         <main>
             <div className='main-container-photo'>

@@ -12,16 +12,12 @@ import { map } from "leaflet";
 import { fetchPlace } from './fetchPlace';
 import { SearchOutline } from 'react-ionicons'
 
-
-
 const API_URI = process.env.NEXT_PUBLIC_API_URI;
-
 
 async function load_model() {
   const model = await tf.loadLayersModel("models/model.json");
   return model;
 }
-
 
 export default function Map({ serverSwitch, segmentationSwitch }) {
   const [screenshotter, setScreenshotter] = useState(null);
@@ -53,14 +49,11 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
       })
   };
 
-
   useEffect(async () => {
     tf.setBackend('webgl');
     const { io } = await import("socket.io-client");
     const L = await import('leaflet');
     const { SimpleMapScreenshoter } = await import('leaflet-simple-map-screenshoter');
-
-
 
     const mysocket = io(API_URI);
 
@@ -73,8 +66,6 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
     });
 
     setSocket(mysocket);
-
-
 
     const c_map = L.map("map").setView([40.419215, -3.693358], 13);
     setMap(c_map);
@@ -105,8 +96,6 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
 
   }, []);
 
-
-
   const handleCityChange = async (e) => {
     setCity(e.target.value);
     if (!city) return;
@@ -119,9 +108,8 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
   };
 
   const handleClick = () => {
-
     const query = document.getElementById("city").value;
-    var hasNumber = /\d/;
+    let hasNumber = /\d/;
     if (hasNumber.test(query)) {
       const coords = query.split(",");
 
@@ -142,7 +130,7 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
       <Head>
         <link
           rel="stylesheet"
-          href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+          href={"https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"}
           integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
           crossOrigin=""
         />
@@ -181,7 +169,6 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
             <span className="map-screenshot-button custom-button" id="button" onClick={onButtonClick}>Procesar imagen →</span>}
           <div className="map-container">
 
-
             {segmentationSwitch === false && (<>
               <div className="map-slider-container">
                 <input type="range" min="0" max="1" className="custom-slider" step="0.1"
@@ -190,9 +177,7 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
                   }} />
               </div>
               <canvas id='mask-image' className="map" />
-
             </>)}
-
             <canvas ref={maskImageOpacityRef} id='prediction' className="map" style={{mixBlendMode: segmentationSwitch ? 'normal' : 'screen'}}/>
           </div>
         </div>
