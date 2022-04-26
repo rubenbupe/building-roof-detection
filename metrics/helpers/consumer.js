@@ -82,6 +82,7 @@ function work(msg, cb) {
 		const message_content = JSON.parse(msg.content.toString());
 
 		if (msg.fields.routingKey == 'image_processing') {
+			cb(true);
 			const pred = new Prediction({
 				execution_time: message_content.execution_time,
 				message_datetime: message_content._message_datetime,
@@ -91,12 +92,13 @@ function work(msg, cb) {
 	
 			pred.save().then(() => {
 				console.log('Saved prediction');
-				cb(true);
+				//cb(true);
 			}).catch(() => {
 				console.error('Error saving prediction');
-				cb(false);
+				//cb(false);
 			})
 		}else if (msg.fields.routingKey == 'search_processing'){
+			cb(true);
 			const search = new Search({
 				message_datetime: message_content._message_datetime,
 				latitude: message_content.latitude,
@@ -107,10 +109,10 @@ function work(msg, cb) {
 	
 			search.save().then(() => {
 				console.log('Saved search');
-				cb(true);
+				//cb(true);
 			}).catch((err) => {
 				console.error('Error saving search', err);
-				cb(false);
+				//cb(false);
 			});
 		}
 	} catch {
