@@ -8,6 +8,7 @@ import React, { useEffect, useState, useRef } from "react";
 import * as tf from '@tensorflow/tfjs';
 import * as toggleStrategy from '../../helpers/toggleStrategy.js';
 import * as search_helpers from '../../helpers/search';
+import * as location_helper from '../../helpers/location'
 import { map } from "leaflet";
 import { fetchPlace } from './fetchPlace';
 import { SearchOutline } from 'react-ionicons'
@@ -86,6 +87,7 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
         console.log(currentLocation)
         setLat(currentLocation.coords.latitude)
         setLon(currentLocation.coords.longitude)
+        location_helper.registerLocation(API_URI,currentLocation.coords.latitude,currentLocation.coords.longitude);
 
       }, ()=>{
         console.error("ubicacion no encontrada")
