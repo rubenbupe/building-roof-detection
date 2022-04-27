@@ -120,6 +120,11 @@
           filter: invert(100%);
         }
       }
+
+      span {
+        display: flex;
+        align-items: center;
+      }
     }
   }
 }

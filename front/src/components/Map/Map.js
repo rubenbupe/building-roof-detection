@@ -11,7 +11,7 @@ import * as search_helpers from '../../helpers/search';
 import * as location_helper from '../../helpers/location'
 import { map } from "leaflet";
 import { fetchPlace } from './fetchPlace';
-import { SearchOutline } from 'react-ionicons'
+import { SearchOutline, CloseOutline } from 'react-ionicons'
 
 const API_URI = process.env.NEXT_PUBLIC_API_URI;
 
@@ -31,6 +31,7 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
   const [autocompleteCities, setAutocompleteCities] = useState([]);
   const [autocompleteErr, setAutocompleteErr] = useState([]);
   const [map, setMap] = useState(null);
+  const [searchToggle, setSearchToggle] = useState(true);
 
   const maskImageOpacityRef = useRef();
 
@@ -130,22 +131,35 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
   };
 
   const handleClick = () => {
-    const query= document.getElementById("city").value;
-    console.log(query)
+    let override;
+    if (searchToggle) {
+      const query = document.getElementById("city").value;
+      console.log(query)
 
-    const regex = /^[\s]*([-]?[\d]+[[\.]\d+]?)\s*\,\s*(-?\d+[[\.][\d]+]?)/mi;
+      const regex = /^[\s]*([-]?[\d]+[[\.]\d+]?)\s*\,\s*(-?\d+[[\.][\d]+]?)/mi;
 
-  let coords;
-  if ((coords = regex.exec(query)) !== null) {
-   
-      const lat =coords[1];
-      const lon = coords[2];  
-      search_helpers.registerSearch(API_URI, lat, lon, query);
-      map?.setView([lat, lon], 13);
+      let coords;
+      if ((coords = regex.exec(query)) !== null) {
+
+        const lat = coords[1];
+        const lon = coords[2];
+        search_helpers.registerSearch(API_URI, lat, lon, query);
+        map?.setView([lat, lon], 13);
+      } else {
+        search_helpers.search(API_URI, query, (lat, lon) => {
+          map?.setView([lat, lon], 13);
+        });
+      }
+    } else {
+      document.getElementById("city").value = "";
+      override = true;
     }
-    else {
-      search_helpers.search(API_URI, query, (lat,lon) => {map?.setView([lat, lon], 13);});
-    }
+    handleToggle(override);
+  }
+
+  function handleToggle(override){
+    if (document.getElementById('city').value || override)
+      setSearchToggle(!searchToggle);
   }
 
   return (
@@ -179,8 +193,8 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
                 ))}
               </datalist>
               <button
-                className="custom-button" id="search-button" onClick={handleClick}
-              ><SearchOutline />
+                  className="custom-button" id="search-button" onClick={handleClick}>
+                {searchToggle ? <SearchOutline/> : <CloseOutline/>}
               </button>
             </div>
             <div className="map-container">
