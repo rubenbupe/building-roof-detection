@@ -1,0 +1,125 @@
+@mixin max-width($width) {
+  @media screen and (max-width: $width) {
+    @content;
+  }
+}
+
+.container-main-api{
+  width: 100%;
+  height: 70vh;
+}
+
+.container-api{
+  display: grid;
+  grid-template-columns: 2fr 7fr;
+  grid-column-gap: 4rem;
+  margin: 0rem 4rem;
+  height: 100%;
+}
+
+.api-button{
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  font-weight: 200;
+  letter-spacing: 0.05em;
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  margin-top: 5px;
+
+  &:hover {
+    background-color: var(--selected-background);
+    -webkit-transition: background-color 300ms linear;
+    -ms-transition: background-color 300ms linear;
+    transition: background-color 300ms linear;
+  }
+}
+
+.api-separator{
+  width: 85%;
+  height: 0px;
+  border: 0.5px solid black;
+  margin: 10px 0px;
+}
+
+.api-text-separator{
+  width: 95%;
+  height: 0px;
+  border: 0.5px solid black;
+  margin: 50px 0px;
+  align-self: center;
+  margin-left: 2.5%;
+}
+
+.api-button-text-2{
+  flex: 1;
+  text-align: center;
+}
+
+.api-menu{
+  background-color: var(--w-color);
+  border-radius: 10px;
+  flex: 1;
+  mix-blend-mode: screen;
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.api-text{
+  background-color: var(--w-color);
+  border-radius: 10px;
+  flex: 1;
+  mix-blend-mode: screen;
+  padding: 20px;
+  overflow: scroll;
+
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .api-text-title{
+    margin: 10px;
+    font-size: 1.5em;
+    text-decoration: underline;
+  }
+
+  .api-text-subtitle{
+    margin: 10px;
+    font-size: 1.2em;
+  }
+
+  .api-text-params{
+    margin-left: 15px;
+    margin-top: 20px;
+    font-size: 1em;
+    text-decoration: underline;
+  }
+
+  .api-text-params-item{
+    margin-left: 25px;
+    margin-top: 10px;
+    font-size: 1em;
+  }
+}
+
+@include max-width(1080px) {
+  .container-api{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-column-gap: 0rem;
+    margin: 0rem 0.5rem;
+  }
+
+  .api-menu{
+    display: none;
+  }
+  
+}
