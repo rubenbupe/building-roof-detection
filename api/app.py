@@ -51,6 +51,17 @@ def register_search():
     return response
 
 
+@app.route('/location', methods=['POST'])
+def register_location():
+    latitude = request.json.get('latitude'),
+    longitude = request.json.get('longitude'),
+
+    message_publisher.publish_user_location(latitude, longitude)
+
+    response = make_response()
+    return response
+
+
 @app.route('/predictions/instance', methods=['GET'])
 def prediction_instance():
     start_time = time.time()

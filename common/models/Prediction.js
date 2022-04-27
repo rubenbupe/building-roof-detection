@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 
-const predictionSchema = new mongoose.Schema({ //todo add credit card number
+const predictionSchema = new mongoose.Schema({
     execution_time: {
         type: Number,
         required: true,

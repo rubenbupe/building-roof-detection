@@ -4,6 +4,7 @@ const amqp = require('amqplib/callback_api');
 
 const { Prediction } = require('../../common/models/Prediction');
 const { Search } = require('../../common/models/Search');
+const { Location } = require('../../common/models/Location');
 
 // if the connection is closed or fails to be established at all, we will reconnect
 var amqpConn = null;
@@ -59,6 +60,12 @@ function startWorker() {
 			console.log("Worker is started for search_processing");
 		});
 
+		ch.assertQueue("location_processing", { durable: true }, function (err, _ok) {
+			if (closeOnErr(err)) return;
+			ch.consume("location_processing", processMsg, { noAck: false });
+			console.log("Worker is started for location_processing");
+		});
+
 		function processMsg(msg) {
 			var incomingDate = (new Date()).toISOString();
 			console.log("Msg [deliveryTag=" + msg.fields.deliveryTag + "] arrived at " + incomingDate);
@@ -101,8 +108,8 @@ function work(msg, cb) {
 			cb(true);
 			const search = new Search({
 				message_datetime: message_content._message_datetime,
-				latitude: message_content.latitude,
-				longitude: message_content.longitude,
+				latitude: message_content.latitude?.[0] ?? message_content.latitude,
+				longitude: message_content.longitude?.[0] ?? message_content.longitude,
 				query: message_content.query,
 			});
 
@@ -112,6 +119,24 @@ function work(msg, cb) {
 				//cb(true);
 			}).catch((err) => {
 				console.error('Error saving search', err);
+				//cb(false);
+			});
+		}else if (msg.fields.routingKey == 'location_processing'){
+			cb(true);
+
+			console.log(message_content)
+			const search = new Location({
+				message_datetime: message_content._message_datetime,
+				latitude: message_content.latitude?.[0] ?? message_content.latitude,
+				longitude: message_content.longitude?.[0] ?? message_content.longitude,
+			});
+
+	
+			search.save().then(() => {
+				console.log('Saved location');
+				//cb(true);
+			}).catch((err) => {
+				console.error('Error saving location', err);
 				//cb(false);
 			});
 		}

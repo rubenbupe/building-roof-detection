@@ -31,8 +31,10 @@ class Publisher:
 		self.connection = pika.BlockingConnection(params)
 		self.channel_image = self.connection.channel() 
 		self.channel_search = self.connection.channel() 
+		self.channel_location = self.connection.channel() 
 		self.channel_image.queue_declare(queue='image_processing', durable=True) 
 		self.channel_search.queue_declare(queue='search_processing', durable=True) 
+		self.channel_location.queue_declare(queue='location_processing', durable=True) 
 
 
 	def __serialize_message(self, **kwargs) -> dict:
@@ -64,6 +66,30 @@ class Publisher:
 		self.__setup_connection()
 		self.channel_search.basic_publish(exchange='',
                       routing_key='search_processing',
+                      body=message_payload)
+
+
+	def publish_user_location(self, latitude, longitude) -> None:
+		if( latitude == None or longitude == None):
+			return
+
+		lat = latitude
+		lon = longitude
+		if isinstance(latitude, list):
+			lat = latitude[0]
+		if isinstance(longitude, list):
+			lon = longitude[0]
+
+		message_datetime = datetime.datetime.now(datetime.timezone.utc).isoformat()
+		message_payload = json.dumps({
+			"_message_datetime":message_datetime,
+			"latitude":lat,
+			"longitude":lon,
+		})
+
+		self.__setup_connection()
+		self.channel_location.basic_publish(exchange='',
+                      routing_key='location_processing',
                       body=message_payload)
 
 

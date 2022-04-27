@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const searchSchema = new mongoose.Schema({ //todo add credit card number
+const searchSchema = new mongoose.Schema({
     message_datetime: {
         type: Date,
         required: true,
