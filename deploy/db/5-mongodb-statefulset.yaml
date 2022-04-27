@@ -212,6 +212,6 @@ spec:
       storageClassName: "fast"
       accessModes:
       - ReadWriteOnce
-      resources: # TODO cambiar para produccion, comprobar escalabilidad
+      resources: 
         requests:
           storage: 20Gi

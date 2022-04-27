@@ -15,8 +15,6 @@ async function load_model() {
   return model;
 }
 
-
-
 export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
   const [model, setModel] = useState(null);
   const [socket, setSocket] = useState(null);
@@ -50,7 +48,6 @@ export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
     tf.setBackend('webgl');
     const { io } = await import("socket.io-client");
 
-
     const mysocket = io(API_URI);
 
     mysocket.on('connect', function () {
@@ -68,12 +65,16 @@ export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
     });
   }, []);
 
+  useEffect(()=>{
+          setPhotoUploaded(false);
+      },
+      [segmentationSwitch, serverSwitch]);
 
   return (
     <div className='container'>
         <Head>
             <title>Proyecto Reconocimiento</title>
-            <link rel='icon' href='/favicon.ico'/>
+            <link rel='icon' href={'/favicon.ico'}/>
         </Head>
         <main>
             <div className='main-container-photo'>
@@ -99,9 +100,7 @@ export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
                         </div>
                         <canvas id='mask-image' className='map'/>
                     </>)}
-
                     <canvas ref={maskImageOpacityRef} id='prediction' className='map'/>
-
                 </div>
                 : <></>}
             </div>

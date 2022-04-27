@@ -1,11 +1,11 @@
 import Header from "../src/components/Header/Header"
 import Footer from '../src/components/Footer/Footer';
 
-function Photo() {
+function Api() {
   return <div>
     <Header toggleSwitch={false}/>
     <Footer/>
   </div>
 }
 
-export default Photo
+export default Api

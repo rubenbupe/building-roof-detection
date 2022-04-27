@@ -10,6 +10,7 @@
   column-gap: 20px;
   row-gap: 40px;
   align-items: flex-end;
+  margin: 0 20px 0 20px;
 
   .map-screenshot-button,
   .spinner-container {
@@ -123,7 +124,18 @@
   }
 }
 
-@include max-width(1600px) {
+@include max-width(1450px) {
+  .main-container-map {
+    .map-container {
+      .map, #mask-image, #prediction {
+        width: 500px;
+        height: 500px;
+      }
+    }
+  }
+}
+
+@include max-width(1320px) {
   .main-container-map {
     grid-template-columns: 1fr;
 
@@ -136,7 +148,20 @@
   }
 }
 
-@include max-width(1000px) {
+@include max-width(720px) {
+  .main-container-map {
+    grid-template-columns: 1fr;
+
+    .map-container {
+      .map, #mask-image, #prediction {
+        width: 400px;
+        height: 400px;
+      }
+    }
+  }
+}
+
+@include max-width(480px) {
   .main-container-map {
     grid-template-columns: 1fr;
 
@@ -144,6 +169,19 @@
       .map, #mask-image, #prediction {
         width: 300px;
         height: 300px;
+      }
+    }
+  }
+}
+
+@include max-width(360px) {
+  .main-container-map {
+    grid-template-columns: 1fr;
+
+    .map-container {
+      .map, #mask-image, #prediction {
+        width: 200px;
+        height: 200px;
       }
     }
   }
