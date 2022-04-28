@@ -50,6 +50,7 @@ spec:
       port: 30001
       targetPort: 3000
   type: NodePort
+  sessionAffinity: ClientIP # Important for websockets, chooses always same pod for each user IP
 
 ---
 apiVersion: autoscaling/v2beta2
