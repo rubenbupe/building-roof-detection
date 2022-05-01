@@ -48,7 +48,7 @@ export default function PhotoUpload({serverSwitch, segmentationSwitch}) {
     tf.setBackend('webgl');
     const { io } = await import("socket.io-client");
 
-    const mysocket = io(API_URI);
+    const mysocket = io(API_URI, {withCredentials: true});
 
     mysocket.on('connect', function () {
       console.log('Se ha extablecido la conexión con el servidor');

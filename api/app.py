@@ -62,7 +62,7 @@ def register_location():
     return response
 
 
-@app.route('/predictions/instance', methods=['GET'])
+@app.route('/predictions/instance', methods=['POST'])
 def prediction_instance():
     start_time = time.time()
     img = cv2.imdecode(np.fromstring(
@@ -92,7 +92,7 @@ def prediction_instance():
     return response
 
 
-@app.route('/predictions/semantic', methods=['GET'])
+@app.route('/predictions/semantic', methods=['POST'])
 def prediction_semantic():
     start_time = time.time()
 

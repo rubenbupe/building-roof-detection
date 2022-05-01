@@ -63,7 +63,7 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
     const L = await import('leaflet');
     const { SimpleMapScreenshoter } = await import('leaflet-simple-map-screenshoter');
 
-    const mysocket = io(API_URI);
+    const mysocket = io(API_URI, {withCredentials: true});
 
     mysocket.on('connect', function () {
       console.log('Se ha extablecido la conexión con el servidor');
