@@ -3,7 +3,7 @@ export const navLinks = [
     name: "Mapa",
     path: "/map",
   },
-  { name: "Subida", 
+  { name: "Subir", 
     path: "/photo" 
   },
   { name: "Referencia de API", 
