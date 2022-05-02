@@ -1,12 +1,12 @@
 export const navLinks = [
   {
-    name: "Map",
+    name: "Mapa",
     path: "/map",
   },
-  { name: "Upload", 
+  { name: "Subida", 
     path: "/photo" 
   },
-  { name: "API Reference", 
+  { name: "Referencia de API", 
     path: "/api-reference" 
   },
 ];
