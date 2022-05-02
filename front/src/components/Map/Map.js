@@ -132,7 +132,6 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
 
   const handleClick = () => {
     let override;
-    if (searchToggle) {
       const query = document.getElementById("city").value;
       console.log(query)
 
@@ -150,17 +149,9 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
           map?.setView([lat, lon], 13);
         });
       }
-    } else {
-      document.getElementById("city").value = "";
-      override = true;
-    }
-    handleToggle(override);
+
   }
 
-  function handleToggle(override){
-    if (document.getElementById('city').value || override)
-      setSearchToggle(!searchToggle);
-  }
 
   return (
     <div>
@@ -194,7 +185,7 @@ export default function Map({ serverSwitch, segmentationSwitch }) {
               </datalist>
               <button
                   className="custom-button" id="search-button" onClick={handleClick}>
-                {searchToggle ? <SearchOutline/> : <CloseOutline/>}
+                <SearchOutline/> 
               </button>
             </div>
             <div className="map-container">
