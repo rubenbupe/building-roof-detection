@@ -23,8 +23,8 @@ async function load_model() {
 export default function Map({ serverSwitch, segmentationSwitch }) {
   const [screenshotter, setScreenshotter] = useState(null);
   const [socket, setSocket] = useState(null);
-  const [currentLatitude, setLat] = useState(40.419215);
-  const [currentLongitude, setLon] = useState(-3.693358);
+  const [currentLatitude, setLat] = useState(40.539179);
+  const [currentLongitude, setLon] = useState(-3.893076);
   const [model, setModel] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [city, setCity] = useState([]);

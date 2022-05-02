@@ -95,7 +95,6 @@ def prediction_instance():
 @app.route('/predictions/semantic', methods=['POST'])
 def prediction_semantic():
     start_time = time.time()
-
     img = cv2.imdecode(np.fromstring(
         request.files['image'].read(), np.uint8), cv2.IMREAD_COLOR)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
