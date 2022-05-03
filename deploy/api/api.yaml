@@ -29,8 +29,8 @@ spec:
               value: amqp://guest:guest@rabbitmq-0.rabbitmq.default.svc.cluster.local:5672/
           resources:
             requests:
-              cpu: 512m
-              memory: 1024Mi
+              cpu: 256m
+              memory: 512Mi
       nodeSelector:
         cloud.google.com/gke-nodepool: default-pool
 

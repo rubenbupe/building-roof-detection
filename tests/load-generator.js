@@ -37,4 +37,4 @@ const multi_load = async (cont) => {
 
 
 
-multi_load(5);
+multi_load(10);
