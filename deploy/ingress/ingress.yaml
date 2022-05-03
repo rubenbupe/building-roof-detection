@@ -17,7 +17,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
     nginx.ingress.kubernetes.io/affinity: "cookie"
-
+    nginx.ingress.kubernetes.io/affinity-mode: "persistent"
 spec:
   ingressClassName: nginx
   tls:
