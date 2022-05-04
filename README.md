@@ -1,7 +1,7 @@
 ﻿# Reconocimiento del medio
 
 
-## Requirementes
+## Requirements
 To deploy this project in your local machine, you need to install Python and Node.js dependencies:
 - Go to `./api` folder and run `pip install -r requirements.txt`. You can also create a virtual environment before running this command.
 - In the project root, run `npm i` to install Node.js libraries.
