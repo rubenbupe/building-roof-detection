@@ -1,14 +1,14 @@
-﻿Reconocimiento del medio
+﻿# Reconocimiento del medio
 
 
-# Requirementes
+## Requirementes
 To deploy this project in your local machine, you need to install Python and Node.js dependencies:
 - Go to `./api` folder and run `pip install -r requirements.txt`. You can also create a virtual environment before running this command.
 - In the project root, run `npm i` to install Node.js libraries.
 
 This project has been tested with Python 3.8+ and Node.js 14.18
 
-# How to run in a local machine
+## How to run in a local machine
 This project consists on multiple services, as shown in the picture below.
 
 ![Project architecture](./assets/architecture.png "Title")
@@ -23,7 +23,7 @@ To run in development mode you have to deploy each service individually:
 
 
 
-# How to deploy on GCP cluster
+## How to deploy on GCP cluster
 - Get a regional IP address
 - Create a GKE cluster
 - Download credentials for GKE cluster (limited permissions)
